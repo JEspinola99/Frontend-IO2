@@ -20,7 +20,7 @@ export default function Index() {
         <Toaster position="top-right" />
         <Card className='cardForm'>
           <Card.Header>
-            <h2>Login cambiado</h2>
+            <h2>Iniciar Sesión</h2>
           </Card.Header>
           <Card.Body>
 

@@ -1,12 +1,12 @@
 import { apiClient } from "@/helpers/validations/login/apiClient"
-import { userData } from "@/interfaces/login"
+import { loginData } from "@/interfaces/login"
 
-export const login = (data: userData) => {
+export const login = (data: loginData) => {
     const url = "auth/signin"
     return apiClient.post(url, data)
 }
 
-export const signup = (data: userData) => {
+export const signup = (data: loginData) => {
     const url = "auth/signup"
     return apiClient.post(url, data)
 }
