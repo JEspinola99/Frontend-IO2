@@ -1,24 +1,25 @@
 import { loginSchema } from "@/helpers/validations/login/loginSchema"
-import { userData } from "@/interfaces/login"
+import { registerSchema } from "@/helpers/validations/register/registerSchema"
+import { registerData } from "@/interfaces/register"
 import { signup } from "@/services/loginService"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import toast from 'react-hot-toast';
 
 export const useRegisterForm = () => {
 
     const router = useRouter()
 
-    const methods = useForm<userData>({
+    const methods = useForm<registerData>({
         reValidateMode: 'onChange',
-        resolver: yupResolver(loginSchema),
-        defaultValues: loginSchema.cast({})
+        resolver: yupResolver(registerSchema),
+        defaultValues: registerSchema.cast({})
     })
 
-    const handleSubmit = async (userData: userData) => {
+    const handleSubmit: SubmitHandler<registerData> = async (data) => {
         try {
-            const res = await signup(userData)
+            const res = await signup(data)
             console.log(res)
             if (res?.data.message == "Signup succes") {
                 toast.success('Todo correcto!.')
