@@ -21,7 +21,7 @@ export const useRegisterForm = () => {
             const res = await signup(userData)
             console.log(res)
             if (res?.data.message == "Signup succes") {
-                toast.success('Todo correcto pleb!.')
+                toast.success('Todo correcto!.')
                 setTimeout(() => {
                     router.push('/')
                 }, 1000)
