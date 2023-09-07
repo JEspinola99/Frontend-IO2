@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Todo App',
-  description: 'Todo App',
+  title: 'TaskBoard',
+  description: 'TaskBoard es un sistema que utiliza el tablero Kanban',
 }
 
 export default function RootLayout({
