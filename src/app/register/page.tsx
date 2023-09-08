@@ -31,9 +31,9 @@ export default function Index() {
                 <Col>
                   <InputValidated name='name' label='Nombre' />
                 </Col>
-                <Col>
+                {/* <Col>
                   <InputValidated name='lastName' label='Apellido' />
-                </Col>
+                </Col> */}
 
               </Row>
 

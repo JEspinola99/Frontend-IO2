@@ -24,11 +24,16 @@ export const useRegisterForm = () => {
             if (res?.data.message == "Signup succes") {
                 toast.success('Todo correcto!.')
                 setTimeout(() => {
-                    router.push('/')
+                    router.push('/login')
                 }, 1000)
             }
         } catch (error: any) {
-            toast.error('No se pudo procesar la solicitud!.')
+            const message = 'Password has to be at between 3 and 20 chars'
+            if(message == 'Password has to be at between 3 and 20 chars'){
+                toast.error(message)
+            }else{
+                toast.error('No se pudo procesar la solicitud!.')
+            }
         }
     }
 

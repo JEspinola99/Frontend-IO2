@@ -19,7 +19,8 @@ export const useLoginForm = () => {
     const handleSubmit: SubmitHandler<loginData> = async(data) => {
         try{
             const res = await login(data)
-            if(res?.data.message == "Logged in succesfully"){
+            console.log(res?.data)
+            if(res?.data == "Logged in succesfully"){
                 toast.success('Todo correcto!.')
                 setTimeout(()=> {
                     router.push('/')

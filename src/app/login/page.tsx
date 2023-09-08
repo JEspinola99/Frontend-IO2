@@ -6,7 +6,7 @@ import { ErrorMessage } from '@hookform/error-message'
 import Link from 'next/link'
 import React from 'react'
 import { Button, Card, Container, Form, FormControl, FormLabel } from 'react-bootstrap'
-import { Controller, FormProvider } from 'react-hook-form'
+import { FormProvider } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast';
 
 export default function Index() {
