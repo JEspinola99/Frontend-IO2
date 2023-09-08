@@ -23,7 +23,7 @@ export const useLoginForm = () => {
             if(res?.data == "Logged in succesfully"){
                 toast.success('Todo correcto!.')
                 setTimeout(()=> {
-                    router.push('/')
+                    router.push('espacio')
                 }, 1000)
             }
         }catch(error:any){

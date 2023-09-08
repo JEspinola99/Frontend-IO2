@@ -16,31 +16,30 @@ export default function Index() {
 
   return (
     <FormProvider {...methods}>
-      <Container className='containerForm' fluid>
-        <Toaster position="top-right" />
-        <Card className='cardForm'>
-          <Card.Header>
-            <h2>Iniciar Sesión</h2>
-          </Card.Header>
-          <Card.Body>
+      <Container className='form-structor' fluid>
+        <div class="signup">
+          <h2 class="form-title" id="signup"> TaskBoard</h2>
+          <h2 class="form-title" id="signup" > Login</h2>
+          <Form   onSubmit={methods.handleSubmit(handleSubmit)} >
+              
+                <InputValidated 
+                  label='Email'
+                  type="text"  
+                  name='email' />
+                <InputValidated 
+                  label='Contraseña'
+                  name='password' 
+                  type='password'/>
 
-            <Form className='loginForm' onSubmit={methods.handleSubmit(handleSubmit)} >
-              <Container>
-                <InputValidated name='email' label='Correo Electrónico' />
-              </Container>
-
-              <Container>
-                <InputValidated name='password' type='password' label='Contraseña' />
-              </Container>
-
-              <Button type='submit'>
-                Iniciar Sesion
-              </Button>
-              <Link href={"/register"}>Registrarte</Link>
-
-            </Form>
-          </Card.Body>
-        </Card>
+                <Button 
+                  type='submit' 
+                  className='submit-btn'>
+                  Iniciar Sesión
+                </Button>
+          </Form> 
+              Crear una cuenta 
+              <Link href={"/register"}> Sign Up</Link>
+        </div>
       </Container>
     </FormProvider>
   )

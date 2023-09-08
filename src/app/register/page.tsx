@@ -17,43 +17,37 @@ export default function Index() {
 
   return (
     <FormProvider {...methods}>
-      <Container className='containerForm' fluid>
-        <Toaster position="top-right" />
-        <Card className='cardForm'>
-          <Card.Header>
-            <h2>Registrarse</h2>
-          </Card.Header>
-          <Card.Body>
-
-            <Form className='loginForm' onSubmit={methods.handleSubmit(handleSubmit)} >
-
-              <Row>
-                <Col>
-                  <InputValidated name='name' label='Nombre' />
-                </Col>
-                {/* <Col>
-                  <InputValidated name='lastName' label='Apellido' />
-                </Col> */}
-
-              </Row>
-
-              <Row>
-                <Col>
-                  <InputValidated name='email' label='Correo Electrónico' />
-                </Col>
-                <Col>
-                  <InputValidated name='password' type='password' label='Contraseña' />
-                </Col>
-              </Row>
-
-              <Button type='submit'>
+      <Container className='form-structor' fluid>
+        <div className="signup">
+          <h2 className="form-title" id="signup"> TaskBoard</h2>
+          <h2 className="form-title" id="signup" > Sign Up</h2>
+          <Form   onSubmit={methods.handleSubmit(handleSubmit)} >
+            <InputValidated 
+            name='name' 
+            label='Nombre' />
+      
+            <InputValidated 
+            name='lastName' 
+            label='Apellido' />
+    
+            <InputValidated 
+              name='email' 
+              label='Correo Electrónico' />
+       
+            <InputValidated 
+              name='password' 
+              type='password' 
+              label='Contraseña' />
+      
+              <Button 
+                type='submit' 
+                className='submit-btn'>
                 Registrarse
               </Button>
-              <Link href={"/login"}>Iniciar Sesión</Link>
-
-            </Form>
-          </Card.Body>
-        </Card>
+          </Form>
+            Ya tienes una cuenta
+            <Link href={"/login"}> Login</Link>
+        </div>
       </Container>
     </FormProvider>
   )
