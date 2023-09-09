@@ -11,35 +11,30 @@ import { Controller, FormProvider } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast';
 
 export default function Espacio() {
-  const { handleSubmit, methods } = useLoginForm()
+  const { handleLogout } = useLoginForm()
 
-  const  email = useUserStore((state) => state.email)
+  const email = useUserStore((state) => state.email)
 
   return (
-    <FormProvider {...methods}>
+    <>
+      <div className="barra-superior">
+        <h1>TaskBoard</h1>
 
-        <div className="barra-superior">
-          <h1>TaskBoard</h1>
-          
-          <Button className='cerrarsexion'>Cerrar Seción</Button>
-          
-        </div>
+        <Button className='cerrarsexion' onClick={handleLogout}>Cerrar Sesión</Button>
 
-      <Container className ="barra-izquierda">
-          <h2 className="form-title" id="signup"> TaskBoard</h2>
+      </div>
 
-
+      <Container className="barra-izquierda">
+        <h2 className="form-title" id="signup"> TaskBoard</h2>
       </Container>
 
-      <Container className ="principal">
-          <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
-          <Button className='submit-btn'>
-            Crear un tablero nuevo
-          </Button>
+      <Container className="principal">
+        <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
+        <Button className='submit-btn'>
+          Crear un tablero nuevo
+        </Button>
 
       </Container>
-     
-    </FormProvider >
-    
+    </>
   )
 }

@@ -10,3 +10,8 @@ export const signup = (data: loginData) => {
     const url = "auth/signup"
     return apiClient.post(url, data)
 }
+
+export const signout = () => {
+    const url = "auth/signout"
+    return apiClient.get(url)
+}

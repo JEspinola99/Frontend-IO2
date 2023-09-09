@@ -14,7 +14,8 @@ position: static;
 
 
 }
-.barra-superior{
+
+/* .barra-superior{
     border-radius: 5px;
     background: #885588;
     height: 40px;
@@ -145,11 +146,11 @@ position: static;
   }
   
   
-}
+} */
 
 
 /*boton cerrar seción*/
-.cerrarsexion{
+/* .cerrarsexion{
   position: absolute;
   right: 0;
-}
+} */
