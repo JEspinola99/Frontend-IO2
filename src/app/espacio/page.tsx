@@ -16,9 +16,9 @@ export default function Espacio() {
 
         <div className="barra-superior">
           <h1>TaskBoard</h1>
-          <li><Link href={"/login"}>login</Link></li>
-          <li><Link href={"/register"}>Registrarte</Link></li>
-          <li><Link href={"/espacio"}>Espacio de trabajo</Link></li>
+          
+          <Button className='cerrarsexion'>Cerrar Seción</Button>
+          
         </div>
 
       <Container className ="barra-izquierda">
