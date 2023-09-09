@@ -22,13 +22,13 @@ export default function Espacio() {
         </div>
 
       <Container className ="barra-izquierda">
-          <h2 class="form-title" id="signup"> TaskBoard</h2>
+          <h2 className="form-title" id="signup"> TaskBoard</h2>
 
 
       </Container>
 
       <Container className ="principal">
-          <h2 class="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
+          <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
           <Button className='submit-btn'>
             Crear un tablero nuevo
           </Button>
