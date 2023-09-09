@@ -148,3 +148,8 @@ position: static;
 }
 
 
+/*boton cerrar seción*/
+.cerrarsexion{
+  position: absolute;
+  right: 0;
+}
