@@ -2,6 +2,7 @@
 import FormValidationError from '@/components/common/FormValidationError'
 import InputValidated from '@/components/common/inputValidated'
 import { useLoginForm } from '@/hooks/useLoginForm'
+import { useUserStore } from '@/store/user'
 import { ErrorMessage } from '@hookform/error-message'
 import Link from 'next/link'
 import React from 'react'
@@ -11,6 +12,9 @@ import { Toaster } from 'react-hot-toast';
 
 export default function Espacio() {
   const { handleSubmit, methods } = useLoginForm()
+
+  const  email = useUserStore((state) => state.email)
+
   return (
     <FormProvider {...methods}>
 
