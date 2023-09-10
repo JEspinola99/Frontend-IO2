@@ -11,61 +11,8 @@ position: static;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-
-
 }
 
-/* .barra-superior{
-    border-radius: 5px;
-    background: #885588;
-    height: 40px;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-}
-
-.barra-izquierda{
-    border-radius: 5px;
-    background: black;
-    height: 100%;
-    position: absolute;
-    top: 40px;
-    left: 0;
-    width: 30%;
-
-}
-.principal{
-    border-radius: 5px;
-    background: green;
-    height: 100%;
-    position: absolute;
-    top: 40px;
-    right: 0px;
-    width: 75%;
-
-    .submit-btn {
-      background-color: rgba(0,0,0,0.4);
-      color: rgba(256,256,256,0.7);
-      border:0;
-      border-radius: 15px;
-      margin: 15px auto; 
-      padding: 15px 45px;
-      width: 30%;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      opacity: 1;
-      visibility: visible;
-      -webkit-transition: all .3s ease;
-
-      
-      &:hover {
-        transition: all .3s ease;
-        background-color: rgba(0,0,0,0.8);
-      }
-    }
-}
-*/
 
 .form-structor {
   background-color: #222;
@@ -145,7 +92,155 @@ position: static;
       }
     }
   }
-  
-  
 } 
 
+/*ESPACIO DE TRABAJO*/
+.barra-superior {
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  background-color: #fff;
+  height: 40px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+
+  /*boton cerrar seción*/
+  .cerrar {
+    background-color: rgba(0,0,0,0.4);
+    color: rgba(256,256,256,0.7);
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
+
+  .crear{
+    background-color: rgba(0,0,0,0.4);
+    color: rgba(256,256,256,0.7);
+    position: absolute;
+    top: 0;
+    left: 170px;
+    display: block;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.8);
+      }
+  }
+}
+
+.barra-izquierda {
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  background: #fff;
+  height: 94%;
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 26%;
+}
+
+.principal{
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  background: #fff;
+  height: 94%;
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  width: 73%;
+
+}
+/*caja*/
+
+.caja{
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  background: #fff;
+  display: block;
+  margin: 15px auto; 
+  padding: 15px 45px;
+  width: 100%;
+  font-size: 20px;
+  
+}
+
+/*boton de la ventana flotante*/
+.boton{
+  background-color: rgba(0,0,0,0.4);
+  color: rgba(256,256,256,0.7);
+  border:0;
+  border-radius: 15px;
+  display: block;
+  margin: 15px auto; 
+  padding: 15px 45px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: all .3s ease;
+  
+  &:hover {
+    transition: all .3s ease;
+    background-color: rgba(0,0,0,0.8);
+  }
+ }
+
+/*Efecto ventana flotante*/
+.modalmask {
+    background-color: #222;
+    border-radius: 15px;
+    height:100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalmask:target {
+    opacity:1;
+    pointer-events: auto;
+}
+
+
+/*Formato de la ventana*/
+.modalbox{
+    width: 350px;
+    height: 550px;
+    padding: 5px 20px 13px 20px;
+    background: #fff;
+    border-radius:10px;
+    -webkit-transition: all 500ms ease-in;
+    -moz-transition: all 500ms ease-in;
+    transition: all 500ms ease-in;
+   
+}
+
+/*Movimientos*/
+.movedown {
+    margin: 0 auto;
+}
+
+.modalmask:target .movedown{       
+    margin:10% auto;
+}

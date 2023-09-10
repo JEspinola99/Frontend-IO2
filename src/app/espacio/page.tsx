@@ -20,19 +20,42 @@ export default function Espacio() {
       <div className="barra-superior">
         <h1>TaskBoard</h1>
 
-        <Button className='cerrarsexion' onClick={handleLogout}>Cerrar Sesión</Button>
+        <Button className='cerrar' onClick={handleLogout}>Cerrar Sesión</Button>
 
+        <a href="#modal1">
+              <Button className='crear'>Crear</Button>
+        </a>
       </div>
 
       <Container className="barra-izquierda">
-        <h2 className="form-title" id="signup"> TaskBoard</h2>
+        <h2 className="form-title" > Proyectos</h2>
+        <div id="modal1" class="modalmask">
+          <div class="modalbox movedown">
+            <h2>Proyecto</h2>
+              
+              Nombre del Espacio
+              <input className='caja' />
+              Descripción
+              <input className='caja'/>
+              Miembros
+              <input className='caja'/>
+              
+              <Button className='boton' >
+                ACEPAR
+              </Button >
+              <a href="#close" title="Close" >
+                <Button className='boton'>
+                  CERRAR
+                </Button>
+              </a>
+             
+          </div>
+        </div>
       </Container>
 
       <Container className="principal">
         <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
-        <Button className='submit-btn'>
-          Crear un tablero nuevo
-        </Button>
+        
 
       </Container>
     </>
