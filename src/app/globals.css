@@ -64,8 +64,9 @@ position: static;
         background-color: rgba(0,0,0,0.8);
       }
     }
-
 }
+*/
+
 .form-structor {
   background-color: #222;
   border-radius: 15px;
@@ -146,11 +147,5 @@ position: static;
   }
   
   
-} */
+} 
 
-
-/*boton cerrar seción*/
-/* .cerrarsexion{
-  position: absolute;
-  right: 0;
-} */

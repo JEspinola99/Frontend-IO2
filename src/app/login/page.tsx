@@ -23,8 +23,8 @@ export default function Index() {
       <FormProvider {...methods}>
         <Container className='form-structor' fluid>
           <div className="signup">
-            <h2 className="form-title" id="signup"> TaskBoard</h2>
-            <h2 className="form-title" id="signup" > Login</h2>
+            <h2 className="form-title" > TaskBoard</h2>
+            <h2 className="form-title" > Login</h2>
             <Form onSubmit={methods.handleSubmit(handleSubmit)} >
 
               <InputValidated
