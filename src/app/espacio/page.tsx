@@ -53,11 +53,11 @@ export default function Espacio() {
         </div>
       </Container>
 
-      <Container className="principal">
+      <div className="principal">
         <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
         
 
-      </Container>
+      </div>
     </>
   )
 }
