@@ -28,15 +28,12 @@ export const useLoginForm = () => {
             const res = await login(data)
             if(res?.data == "Logged in succesfully"){
                 setUser(data.email)
-                toast.success('Todo correcto!.')
-                setTimeout(()=> {
+                // setTimeout(()=> {
                     router.push('espacio')
-                }, 1000)
+                // })
             }
         }catch(error:any){
-            if(error.response?.data?.message == "Wrong credentials"){
-                toast.error('Email o contraseña invalidos!.')
-            }
+            toast.error(error.response?.data?.message)
         } finally {
             setIsFetching(() => false)
         }
