@@ -108,29 +108,37 @@ position: static;
 
   /*boton cerrar seción*/
   .cerrar {
-    background-color: rgba(0,0,0,0.4);
-    color: rgba(256,256,256,0.7);
+    background: #fff;
+    color: black;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
     position: absolute;
     top: 0;
     right: 0;
     display: block;
 
     &:hover {
+      color: rgba(256,256,256,0.7);
       background-color: rgba(0,0,0,0.8);
     }
   }
 
   .crear{
-    background-color: rgba(0,0,0,0.4);
-    color: rgba(256,256,256,0.7);
+    background: #fff;
+    color: black;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
     position: absolute;
     top: 0;
-    left: 170px;
+    left: 40%;
     display: block;
 
     &:hover {
-        background-color: rgba(0,0,0,0.8);
-      }
+      color: rgba(256,256,256,0.7);
+      background-color: rgba(0,0,0,0.8);
+    }
   }
 }
 
