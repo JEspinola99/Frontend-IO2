@@ -30,7 +30,7 @@ export default function Home() {
 
       <Container className="barra-izquierda">
         <h2 className="form-title" > Proyectos</h2>
-        <div id="modal1" class="modalmask">
+        <div id="modal1" className="modalmask">
           <div class="modalbox movedown">
             <h2>Proyecto</h2>
               
