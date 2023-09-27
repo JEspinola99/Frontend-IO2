@@ -52,8 +52,8 @@ export default function Home() {
              
           </div>
         </div>
-        <div id="tarea" class="modalmask">
-          <div class="modalboards movedown">
+        <div id="tarea" className="modalmask">
+          <div className="modalboards movedown">
 
             <table>
               <tr>
@@ -64,7 +64,7 @@ export default function Home() {
               </tr>
 
               <tr>
-                <th rowspan="7">
+                <th rowSpan={7}>
                     Descripción
                     <textarea className='cajita'/>
                 </th>
