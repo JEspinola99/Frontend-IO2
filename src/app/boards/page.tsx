@@ -17,6 +17,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Table from 'react-bootstrap/Table';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import KanbanBoard from "../components/KanbanBoard";
 
 export default function Home() {
   const { handleLogout } = useLoginForm()
@@ -105,30 +106,34 @@ export default function Home() {
                 </Button>
               </Modal.Footer>
           </Modal>
+
     </div>
 
-      <Container className="barra-izquierda">
-        <h2 className="form-title" > Proyectos</h2>
-        
-      </Container>
-
-      <div className="principal">
+        <div className="principal">
         <div className='barra-superior'>
           <h1 className="form-title" id="signup">Nombre del tablero</h1>
           
-            <Button className = "cerrar" variant="primary" onClick={() => setModalShow(true)}>
+            <Button className = "task" variant="primary" onClick={() => setModalShow(true)}>
               Crear Tarea
             </Button>
 
+
             <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
+
+            <KanbanBoard />
         </div>
         
-      </div>
+      </div> 
+
+
+       
       </>
   );
 }
 
 
+
+ 
 function MydModalWithGrid(props) {
 
   const [validated, setValidated] = useState(false);

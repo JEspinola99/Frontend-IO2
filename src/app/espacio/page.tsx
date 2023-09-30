@@ -100,22 +100,15 @@ export default function Espacio() {
                 </Button>
               </Modal.Footer>
           </Modal>
-        
-    
-
       </div>
-
-      <Container className="barra-izquierda">
-        <h2 className="form-title" > Proyectos</h2>
-        
-
-      </Container>
 
       <div className="principal">
-        <h2 className="form-title" id="signup"> ESPACIO DE TRABAJO</h2>
+        <h2 > ESPACIO DE TRABAJO</h2>
+      
         
 
       </div>
+      
     </>
   )
 }

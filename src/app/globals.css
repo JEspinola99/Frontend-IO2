@@ -155,11 +155,27 @@ position: static;
   border-style: solid;
   border-width: 2px;
   background: #fff;
-  height: 94%;
-  position: absolute;
+  
+   position: absolute;
   top: 45px;
-  left: 26.5%;
-  right: 0;
+  bottom: 0;
+  width: 100%;
+ 
+
+
+  .task{
+    background: #fff;
+    color: black;
+    position: absolute;
+    top: 0;
+    right: 120px;
+    display: block;
+
+    &:hover {
+      color: rgba(256,256,256,0.7);
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
 
 }
 
@@ -188,6 +204,11 @@ position: static;
 }
 
 
-
+.kanbanpos {
+ 
+  position: absolute;
+  top: 45px;
+  left: 25px;
+}
 
 
