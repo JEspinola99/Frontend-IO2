@@ -23,7 +23,7 @@ export default function Index() {
           <h2 className="form-title" id="signup" > Sign Up</h2>
           <Form   onSubmit={methods.handleSubmit(handleSubmit)} >
             <InputValidated 
-            name='name' 
+            name='nombre' 
             label='Nombre' />
       
             <InputValidated 
