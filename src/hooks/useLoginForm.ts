@@ -21,18 +21,18 @@ export const useLoginForm = () => {
         resolver: yupResolver(loginSchema),
         defaultValues: loginSchema.cast({})
     })
-    
-    const handleSubmit: SubmitHandler<loginData> = async(data) => {
-        try{
+
+    const handleSubmit: SubmitHandler<loginData> = async (data) => {
+        try {
             setIsFetching(() => true)
             const res = await login(data)
-            if(res?.data == "Logged in succesfully"){
-                setUser(data.email)
-                // setTimeout(()=> {
-                    router.push('espacio')
-                // })
-            }
-        }catch(error:any){
+            const resData = res?.data
+            console.log(res)
+            setUser(resData.email, resData.id)
+            // setTimeout(()=> {
+            router.push('/')
+            // })
+        } catch (error: any) {
             toast.error(error.response?.data?.message)
         } finally {
             setIsFetching(() => false)
@@ -40,7 +40,7 @@ export const useLoginForm = () => {
     }
 
     const handleLogout = async () => {
-        try{
+        try {
             await signout()
             router.push("/login")
         } catch {

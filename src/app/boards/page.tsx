@@ -31,7 +31,7 @@ export default function Home() {
       <Container className="barra-izquierda">
         <h2 className="form-title" > Proyectos</h2>
         <div id="modal1" className="modalmask">
-          <div class="modalbox movedown">
+          <div className="modalbox movedown">
             <h2>Proyecto</h2>
               
               Nombre del Espacio
