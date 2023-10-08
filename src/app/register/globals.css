@@ -101,7 +101,7 @@ position: static;
   border-style: solid;
   border-width: 2px;
   background-color: #fff;
-  height: 40px;
+  height: 60px;
   position: absolute;
   top: 0px;
   width: 100%;
@@ -111,8 +111,8 @@ position: static;
     background: #fff;
     color: black;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 5px;
     display: block;
 
     &:hover {
@@ -125,8 +125,8 @@ position: static;
     background: #fff;
     color: black;
     position: absolute;
-    top: 0;
-    right: 50px;
+    top: 10px;
+    right: 70px;
     display: block;
 
     &:hover {
@@ -134,20 +134,36 @@ position: static;
       background-color: rgba(0,0,0,0.8);
     }
   }
+
+  .task-btn{
+    background: #fff;
+    color: black;
+    position: absolute;
+    top: 10px;
+    right: 130px;
+    display: block;
+
+    &:hover {
+      color: rgba(256,256,256,0.7);
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
+  
+ 
+  .textbox {
+
+    position: absolute;
+    top: 5px;
+    width: 20%;
+    height: 80%;
+    left: 10px;
+    display: block;
+    text-align: left;
+    font-size: 35px;
+  }
 }
 
-.barra-izquierda {
-  border-radius: 10px;
-  border-color: black;
-  border-style: solid;
-  border-width: 2px;
-  background: #fff;
-  height: 94%;
-  position: absolute;
-  top: 45px;
-  left: 0;
-  width: 26%;
-}
+
 
 .principal{
   border-radius: 10px;
@@ -155,47 +171,26 @@ position: static;
   border-style: solid;
   border-width: 2px;
   background: #fff;
-  
-   position: absolute;
-  top: 45px;
+  position: absolute;
+  top: 62px;
   bottom: 0;
   width: 100%;
  
 
 
-  .task{
-    background: #fff;
-    color: black;
-    position: absolute;
-    top: 0;
-    right: 120px;
-    display: block;
-
-    &:hover {
-      color: rgba(256,256,256,0.7);
-      background-color: rgba(0,0,0,0.8);
-    }
-  }
+  
 
 }
 
 
 /*boton de la ventana flotante*/
 .boton{
-  background-color: rgba(0,0,0,0.4);
-  color: rgba(256,256,256,0.7);
-  border:0;
-  border-radius: 15px;
+  background: #fff;
+  color: black;
+  position: absolute;
+  top: 0;
+  lefth: 0;
   display: block;
-  margin: 15px auto; 
-  padding: 15px 45px;
-  width: 100%;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-  opacity: 1;
-  visibility: visible;
-  -webkit-transition: all .3s ease;
   
   &:hover {
     transition: all .3s ease;
@@ -207,7 +202,7 @@ position: static;
 .kanbanpos {
  
   position: absolute;
-  top: 45px;
+  top: 65px;
   left: 25px;
 }
 
