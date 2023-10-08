@@ -18,13 +18,13 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-      {/* <Navbar bg="dark" data-bs-theme="dark">
+       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="/">TaskBoard</Navbar.Brand>
           <Nav className="me-auto">
           </Nav>
         </Container>
-      </Navbar> */}
+      </Navbar>
         {children}
       </body>
     </html>

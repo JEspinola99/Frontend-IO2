@@ -3,6 +3,8 @@ import { JWTVerifyResult, jwtVerify } from 'jose';
 import { JWT_SECRET } from "./constants/constants";
 import { cookies } from 'next/headers';
 import MainPage from "./components/Main";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -18,7 +20,6 @@ export default async function Home() {
   const { data } = await apiClient.get(url)
 
   return (
-    <h1>Hola</h1>
-    // <MainPage data={data} nombre={nombre} id={id} />
+    <MainPage data={data} nombre={nombre} id={id} />
   ) 
 }
