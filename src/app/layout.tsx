@@ -1,6 +1,7 @@
-import './globals.css'
+"use client"
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Navbar, Container, Nav } from 'react-bootstrap'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,14 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-          {children}
+      {/* <Navbar bg="dark" data-bs-theme="dark">
+        <Container>
+          <Navbar.Brand href="/">TaskBoard</Navbar.Brand>
+          <Nav className="me-auto">
+          </Nav>
+        </Container>
+      </Navbar> */}
+        {children}
       </body>
     </html>
   )

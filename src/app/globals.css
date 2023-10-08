@@ -4,9 +4,9 @@ html,body{
 position: static;
   min-height: 100vh;
   background-color: #E1E8EE;
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

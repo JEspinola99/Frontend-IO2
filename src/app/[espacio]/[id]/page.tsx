@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 import FormValidationError from '@/components/common/FormValidationError'
 import InputValidated from '@/components/common/inputValidated'
 import { apiClient } from '@/helpers/validations/login/apiClient'
@@ -12,28 +12,34 @@ import { Button, Card, Container, Form, FormControl, FormLabel } from 'react-boo
 import { Controller, FormProvider } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast';
 import Modal from 'react-bootstrap/Modal';
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
+import { PageProps } from '../../../../.next/types/app/layout'
+import { getSpace } from '@/services/spaceService'
 
 
 
 
-export default function Espacio() {
-  const { handleLogout } = useLoginForm()
+export default async function Page({params}: PageProps) {
+  const id = params.id
+  const { data } = await getSpace(id)
+  console.log(data)
+  // const { handleLogout } = useLoginForm()
 
-  const state = useUserStore((state) => state)
-  const [spaces, setSpaces] = useState([])
+  // const state = useUserStore((state) => state)
+  // const [spaces, setSpaces] = useState([])
 
-  const email = useUserStore((state) => state.email)
+  // const email = useUserStore((state) => state.email)
 
-  const [smShow, setSmShow] = useState(false);
+  // const [smShow, setSmShow] = useState(false);
 
-  const [lgShow, setLgShow] = useState(false);
-  const handleClose = () => setLgShow(false);
-  const handleShow = () => setLgShow(true);
+  // const [lgShow, setLgShow] = useState(false);
+  // const handleClose = () => setLgShow(false);
+  // const handleShow = () => setLgShow(true);
 
 
   return (
     <>
-      <div className="barra-superior">
+      {/* <div className="barra-superior">
         <h1>TaskBoard</h1>
           <Button className="cerrar" onClick={() => setSmShow(true)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -112,8 +118,14 @@ export default function Espacio() {
       
         
 
-      </div>
-      
+      </div> */}
+      <h1>Espacio: {data.nombre}</h1>
+      <h1>Tableros</h1>
+      {
+        data.Tablero?.map((item) => (
+          <div key={item.id}>{item.nombre}</div>
+        ))
+      }
     </>
   )
 }

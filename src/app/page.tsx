@@ -2,7 +2,7 @@ import { apiClient } from "@/helpers/validations/login/apiClient"
 import { JWTVerifyResult, jwtVerify } from 'jose';
 import { JWT_SECRET } from "./constants/constants";
 import { cookies } from 'next/headers';
-import Link from "next/link";
+import MainPage from "./components/Main";
 
 
 
@@ -15,22 +15,10 @@ export default async function Home() {
   const nombre:string = payload.nombre as string;
 
   const url = `work-space-user/getSpaces/${id}`
-  const { data:spaces } = await apiClient.get(url)
+  const { data } = await apiClient.get(url)
 
   return (
-    <>
- 
-      <main>
-        <h1>Bienvenidos a TaskBoard {nombre}</h1>
-        <h2>Tus Espacios de trabajo</h2>
-        {
-          spaces?.map(space => (
-            <div><Link href={`/espacio`}>{space.nombre}</Link></div>
-          ))
-        }
-             
-      </main>
-
-    </>
-  );
+    <h1>Hola</h1>
+    // <MainPage data={data} nombre={nombre} id={id} />
+  ) 
 }
