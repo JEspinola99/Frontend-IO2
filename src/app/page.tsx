@@ -6,7 +6,6 @@ import MainPage from "./components/Main";
 
 
 
-
 export default async function Home() {
   const cookieStore = cookies()
   const token = cookieStore.get('token')?.value as string
@@ -17,8 +16,12 @@ export default async function Home() {
   const url = `work-space-user/getSpaces/${id}`
   const { data } = await apiClient.get(url)
 
+ 
   return (
+   
+
     <MainPage data={data} nombre={nombre} id={id} />
+
   )
   
 }

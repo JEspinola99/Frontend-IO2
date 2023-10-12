@@ -9,6 +9,7 @@ import { Button, Card, Container, Form, FormControl, FormLabel } from 'react-boo
 import { FormProvider } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast';
 import Spinner from 'react-bootstrap/Spinner';
+import '../globals.css'
 
 export default function Index() {
 

@@ -18,7 +18,7 @@ import Table from 'react-bootstrap/Table';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import KanbanBoard from "../components/KanbanBoard";
-import Espacio from "../espacio/page";
+//import encabezado from "../head/page";
 
 export default function Boards() {
   const { handleLogout } = useLoginForm()
@@ -35,7 +35,7 @@ export default function Boards() {
   return (
     <>
     
-      <Espacio/>
+      
         <div className="principal">
         <div className='barra-superior'>
         

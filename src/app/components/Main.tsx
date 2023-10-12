@@ -2,7 +2,9 @@
 import { createSpace } from "@/services/spaceService";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { Button, Col, Container, FormControl, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, FormControl, Modal, Row,  Navbar, Nav } from "react-bootstrap";
+
+import Encabezado from "../head/page";
 
 export default function MainPage({ data, nombre, id }: any) {
 
@@ -22,6 +24,7 @@ export default function MainPage({ data, nombre, id }: any) {
 
     return (
         <>
+        <Encabezado/>
             <Modal
                 show={show}
                 onHide={handleClose}

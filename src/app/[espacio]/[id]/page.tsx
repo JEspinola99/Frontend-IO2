@@ -15,7 +15,7 @@ import Modal from 'react-bootstrap/Modal';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { PageProps } from '../../../../.next/types/app/layout'
 import { getSpace } from '@/services/spaceService'
-
+import Encabezado from "../../head/page";
 
 
 
@@ -44,7 +44,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-
+      <Encabezado/>
       <h1>Espacio: {data.nombre}</h1>
       <h1>Tableros</h1>
       {
