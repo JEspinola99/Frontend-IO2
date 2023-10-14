@@ -1,4 +1,5 @@
 "use client"
+import '../globals.css'
 import FormValidationError from '@/components/common/FormValidationError'
 import InputValidated from '@/components/common/inputValidated'
 import { useLoginForm } from '@/hooks/useLoginForm'
@@ -26,9 +27,7 @@ export default function Index() {
             name='nombre' 
             label='Nombre' />
       
-            <InputValidated 
-            name='lastName' 
-            label='Apellido' />
+      
     
             <InputValidated 
               name='email' 

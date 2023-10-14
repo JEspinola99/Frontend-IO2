@@ -31,8 +31,14 @@ export default function MainPage({ data, nombre, id, users }: any) {
 
 
     return (
+<<<<<<< HEAD:src/app/components/Main/Main.tsx
         <FormProvider {...methods}>
             <CreateSpaceModal
+=======
+        <>
+        <Encabezado/>
+            <Modal
+>>>>>>> 71980b5bf9b00a934b6c04ce1e3ddbda226b17c7:src/app/components/Main.tsx
                 show={show}
                 handleClose={handleClose}
                 onSubmit={handleSubmit}

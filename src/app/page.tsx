@@ -5,7 +5,6 @@ import { cookies } from 'next/headers';
 import MainPage from "./components/Main/Main";
 import { getAllUsers } from "@/services/userService";
 
-
 export default async function Home() {
   const cookieStore = cookies()
   const token = cookieStore.get('token')?.value as string
@@ -20,6 +19,7 @@ export default async function Home() {
   const users = usersResponse.data.map((user:any) =>({ value: user.id, label: user.email })).filter((user:any) => user.value != id)
 
 
+ 
   return (
     <MainPage users={users} data={data} nombre={nombre} id={id} />
   )
