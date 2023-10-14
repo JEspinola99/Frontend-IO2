@@ -2,49 +2,44 @@
 import { createSpace } from "@/services/spaceService";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { Button, Col, Container, FormControl, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { CreateSpaceModal } from "./Modal";
+import { useForm, FormProvider } from "react-hook-form";
 
-export default function MainPage({ data, nombre, id }: any) {
+export default function MainPage({ data, nombre, id, users }: any) {
 
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(() => false)
     const handleOpen = () => setShow(() => true)
     const [boards, setBoards] = useState(data)
 
-    const handleSubmit = async() => {
-        const data = {nombre: SpaceName.current.value, creadorId: id}
+    const methods = useForm({
+        reValidateMode: 'onChange',
+        defaultValues: {creadorId: id, usuarios: [], nombre: ''}
+    })
+
+
+    const handleSubmit = async (data:any) => {
+        console.log(data)
         const res = await createSpace(data)
-        setBoards((current)=> current.concat(res?.data))
+        setBoards((current:any) => current.concat(res?.data))
         handleClose()
     }
 
+
     const SpaceName = useRef(null)
 
+
     return (
-        <>
-            <Modal
+        <FormProvider {...methods}>
+            <CreateSpaceModal
                 show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Crear Nuevo Espacio</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Row>
-                        <Col>
-                            <FormControl placeholder="Nombre" ref={SpaceName} />
-                        </Col>
-                    </Row>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancelar
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>Crear</Button>
-                </Modal.Footer>
-            </Modal>
+                handleClose={handleClose}
+                onSubmit={handleSubmit}
+                handleSubmit={methods.handleSubmit}
+                SpaceName={SpaceName}
+                users={users}
+            />
             <main>
                 <Container fluid>
                     <Row>
@@ -54,7 +49,7 @@ export default function MainPage({ data, nombre, id }: any) {
                         <Col>
                             <h2>Tus Espacios de trabajo</h2>
                             {
-                                boards?.map(space => (
+                                boards?.map((space:any) => (
                                     <div key={space.id}>
                                         <Link href={`/espacio/${space.id}`}>{space.nombre}</Link>
                                     </div>
@@ -70,6 +65,6 @@ export default function MainPage({ data, nombre, id }: any) {
                 </Container>
             </main>
 
-        </>
+        </FormProvider>
     )
 }

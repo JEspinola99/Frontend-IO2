@@ -6,7 +6,6 @@ export const getSpace = (id:string) => {
 }
 
 export const createSpace = (data: any) => {
-    const url = `work-space/create/`
-    console.log(data)
+    const url = `work-space`
     return apiClient.post(url,data)
 }
