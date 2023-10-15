@@ -1,17 +1,20 @@
 import InputValidated from '@/components/common/inputValidated';
+import { useRouter } from 'next/router';
 import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
 import { useFormContext } from 'react-hook-form';
 import Select from 'react-select'
 
-export const CreateSpaceModal = ({ show, handleClose, onSubmit, SpaceName, users, handleSubmit }: any) => {
+export const CreateSpaceModal = ({ show, handleClose, onSubmit, handleSubmit, edit }: any) => {
 
-    const { register, setValue } = useFormContext()
+    const { register, setValue, getValues } = useFormContext()
+
 
     const handleChange = (e: any) => {
         const users = e.map((user:any) => user.value)
         setValue('usuarios', users)
-    }   
+    }
 
+    
     return (
         <Modal
             show={show}
@@ -31,7 +34,8 @@ export const CreateSpaceModal = ({ show, handleClose, onSubmit, SpaceName, users
                 <Row className='mt-3'>
                     <Row><Col>Usuarios</Col></Row>
                     <Col>
-                        <Select isMulti options={users} {...register('usuarios',)} onChange={handleChange} />
+                        <Select isMulti defaultValue={ edit ? getValues('usuarios') : []} 
+                        options={getValues('options')}  {...register('usuarios')} onChange={handleChange} />
                     </Col>
                 </Row>
             </Modal.Body>

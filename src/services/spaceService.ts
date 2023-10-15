@@ -9,3 +9,8 @@ export const createSpace = (data: any) => {
     const url = `work-space`
     return apiClient.post(url,data)
 }
+
+export const updateSpace = (data: any, id:number) => {
+    const url = `work-space/${id}`
+    return apiClient.put(url, data)
+}

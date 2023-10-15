@@ -9,13 +9,17 @@ import { useForm, FormProvider } from "react-hook-form";
 export default function MainPage({ data, nombre, id, users }: any) {
 
     const [show, setShow] = useState(false)
-    const handleClose = () => setShow(() => false)
+    const handleClose = () => {
+        methods.reset()
+        setShow(() => false)
+    } 
     const handleOpen = () => setShow(() => true)
     const [boards, setBoards] = useState(data)
+    console.log(id)
 
     const methods = useForm({
         reValidateMode: 'onChange',
-        defaultValues: {creadorId: id, usuarios: [], nombre: ''}
+        defaultValues: {creadorId: id, usuarios: [], nombre: '', options: users}
     })
 
 
@@ -26,7 +30,6 @@ export default function MainPage({ data, nombre, id, users }: any) {
     }
 
 
-    const SpaceName = useRef(null)
 
 
     return (
@@ -36,8 +39,6 @@ export default function MainPage({ data, nombre, id, users }: any) {
                 handleClose={handleClose}
                 onSubmit={handleSubmit}
                 handleSubmit={methods.handleSubmit}
-                SpaceName={SpaceName}
-                users={users}
             />
             <main>
                 <Container fluid>
