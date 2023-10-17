@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useMemo, useState } from "react";
 import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
@@ -15,8 +15,8 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
-import { Button, Card, Row } from 'react-bootstrap'
-import CardGroup from 'react-bootstrap/CardGroup';
+import { Button, Card, Row } from "react-bootstrap";
+import CardGroup from "react-bootstrap/CardGroup";
 
 const defaultCols: Column[] = [
   {
@@ -30,13 +30,10 @@ const defaultCols: Column[] = [
   {
     id: "hecho",
     title: "Hecho",
-  }
+  },
 ];
 
-const defaultTasks: Task[] = [
-
-    
-];
+const defaultTasks: Task[] = [];
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
@@ -57,42 +54,39 @@ function KanbanBoard() {
   );
 
   return (
-    
-    <div>
+    <div className="py-50">
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
+        <SortableContext items={columnsId}>
+          <Row className="kanbanpos">
+            {columns.map((col) => (
+              <ColumnContainer
+                key={col.id}
+                column={col}
+                deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={tasks.filter((task) => task.columnId === col.id)}
+              />
+            ))}
+          </Row>
+        </SortableContext>
 
-       
-          
-        
-            <SortableContext items={columnsId}>
-            <Row className="kanbanpos">
-              {columns.map((col) => (
-                <ColumnContainer
-                  key={col.id}
-                  column={col}
-                  deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
-                  createTask={createTask}
-                  deleteTask={deleteTask}
-                  updateTask={updateTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
-                />
-              ))}
-              
-              </Row>
-            
-            </SortableContext>
-         
-          <Button onClick={() => { createNewColumn();}} className='cerrar'>
-            
-            Add Column
-          </Button>
-       
+        <Button
+          variant="primary"
+          onClick={() => {
+            createNewColumn();
+          }}
+          className=""
+        >
+          Add Column
+        </Button>
 
         {createPortal(
           <DragOverlay>
@@ -121,7 +115,6 @@ function KanbanBoard() {
         )}
       </DndContext>
     </div>
-
   );
 
   function createTask(columnId: Id) {
@@ -156,9 +149,8 @@ function KanbanBoard() {
     if (columns.length < 6) {
       setColumns([...columns, columnToAdd]);
     } else {
-     alert("No se pueden crear más de 6 columnas");
+      alert("No se pueden crear más de 6 columnas");
     }
-   
   }
 
   function deleteColumn(id: Id) {

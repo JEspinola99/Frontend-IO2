@@ -69,7 +69,7 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
         handleSubmit={methods.handleSubmit}
         edit={true}
       />
-      <Encabezado />
+
       <h1>Espacio: {spaceData.nombre}</h1>
       <Button onClick={handleOpen}>Editar</Button>
       <h2>Miembros</h2>

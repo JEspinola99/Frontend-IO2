@@ -1,68 +1,59 @@
-"use client"
-import FormValidationError from '@/components/common/FormValidationError'
-import InputValidated from '@/components/common/inputValidated'
-import { useLoginForm } from '@/hooks/useLoginForm'
-import { useUserStore } from '@/store/user'
-import { ErrorMessage } from '@hookform/error-message'
-import Link from 'next/link'
-import React from 'react'
-import { Button, Card, Container, Form, FormControl, FormLabel } from 'react-bootstrap'
-import { Controller, FormProvider } from 'react-hook-form'
-import { Toaster } from 'react-hot-toast';
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Table from 'react-bootstrap/Table';
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+"use client";
+import FormValidationError from "@/components/common/FormValidationError";
+import InputValidated from "@/components/common/inputValidated";
+import { useLoginForm } from "@/hooks/useLoginForm";
+import { useUserStore } from "@/store/user";
+import { ErrorMessage } from "@hookform/error-message";
+import Link from "next/link";
+import React from "react";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  FormControl,
+  FormLabel,
+} from "react-bootstrap";
+import { Controller, FormProvider } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import InputGroup from "react-bootstrap/InputGroup";
+import Table from "react-bootstrap/Table";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import KanbanBoard from "../components/KanbanBoard";
+import { Main } from "../components/espacio/Main";
+import MainPage from "../components/Main/Main";
 //import encabezado from "../head/page";
 
 export default function Boards() {
-  const { handleLogout } = useLoginForm()
+  const { handleLogout } = useLoginForm();
   const email = useUserStore((state) => state.email);
-
 
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <>
-    
-      
-        <div className="principal">
-        <div className='barra-superior'>
-        
-            
-          <h1>Nombre</h1>
-          
-            <Button className = "task-btn"  onClick={() => setModalShow(true)}>
-              Crear Tarea
-            </Button>
-          
+    <MainPage>
+      <div className="p-5 py-20 left-40  fixed inset-y-16 w-full h-30 justify-between">
+        <h1>Nombre</h1>
 
+        <Button className="task-btn" onClick={() => setModalShow(true)}>
+          Crear Tarea
+        </Button>
 
-            <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
-
-
-            <KanbanBoard />
-
-        </div>
-        
-      </div> 
-
-
-       
-      </>
+        <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
+      </div>
+      <div className="p-5 py-50 left-40  fixed inset-y-16 w-full h-ful justify-between">
+        <KanbanBoard />
+      </div>
+    </MainPage>
   );
 }
 
-
-
- 
 function MydModalWithGrid(props) {
-
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -78,145 +69,142 @@ function MydModalWithGrid(props) {
   return (
     <Modal {...props} size="lg" aria-labelledby="example-modal-sizes-title-lg">
       <Modal.Header closeButton>
-        <Modal.Title id="example-modal-sizes-title-lg">
-          Tarea
-        </Modal.Title>
+        <Modal.Title id="example-modal-sizes-title-lg">Tarea</Modal.Title>
       </Modal.Header>
       <Modal.Body className="grid-example">
         <Container>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      
             <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th colSpan={2}>
-              <Form.Group controlId="validationCustomUsername">
-                <InputGroup hasValidation>
-                  
-                  <Form.Control
-                    type="text"
-                    placeholder="Taskname"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-          </th>
-          
-        </tr>
-      </thead>
-      <tbody>
-        <tr >
-          <td rowSpan={5}>
-              <Form.Group as={Col} md="8"controlId="validationCustomUsername">
-                <Form.Label>Descripción</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control as="textarea" rows={15} />
-                  
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-          </td>
-          <td>
-              <Form.Group controlId="validationCustomUsername">
-                <Form.Label>Fecha  Inicio</Form.Label>
-                <InputGroup hasValidation>
-                  
-                  <Form.Control
-                    type="text"
-                    placeholder="Taskname"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
+              <thead>
+                <tr>
+                  <th colSpan={2}>
+                    <Form.Group controlId="validationCustomUsername">
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          type="text"
+                          placeholder="Taskname"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowSpan={5}>
+                    <Form.Group
+                      as={Col}
+                      md="8"
+                      controlId="validationCustomUsername"
+                    >
+                      <Form.Label>Descripción</Form.Label>
+                      <InputGroup hasValidation>
+                        <Form.Control as="textarea" rows={15} />
 
-
-          </td>
-        
-        </tr>
-        <tr>
-          <td>
-            <Form.Group controlId="validationCustomUsername">
-                <Form.Label>Fecha Vencimiento</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Taskname"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-          </td>
-          
-        </tr>
-        <tr>
-          <td>
-            <Form.Group controlId="validationCustomUsername">
-                <Form.Label>Usuario Asignado</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Taskname"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-          </td>
-          
-        </tr>
-        <tr>
-          <td>
-            <Form.Group controlId="validationCustomUsername">
-                <Form.Label>Etiqueta</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Taskname"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a task name.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-          </td>
-          
-        </tr>
-        <tr>
-          <td>
-            <Form.Group controlId="validationCustomUsername">
-                <Form.Select aria-label="Estado">
-                  <option>Estado</option>
-                  <option value="1">Pendiente</option>
-                  <option value="2">En Proceso</option>
-                </Form.Select>
-            </Form.Group>
-          </td>
-          
-        </tr>
-      </tbody>
-    </Table>
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group controlId="validationCustomUsername">
+                      <Form.Label>Fecha Inicio</Form.Label>
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          type="text"
+                          placeholder="Taskname"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Form.Group controlId="validationCustomUsername">
+                      <Form.Label>Fecha Vencimiento</Form.Label>
+                      <InputGroup hasValidation>
+                        <InputGroup.Text id="inputGroupPrepend">
+                          @
+                        </InputGroup.Text>
+                        <Form.Control
+                          type="text"
+                          placeholder="Taskname"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Form.Group controlId="validationCustomUsername">
+                      <Form.Label>Usuario Asignado</Form.Label>
+                      <InputGroup hasValidation>
+                        <InputGroup.Text id="inputGroupPrepend">
+                          @
+                        </InputGroup.Text>
+                        <Form.Control
+                          type="text"
+                          placeholder="Taskname"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Form.Group controlId="validationCustomUsername">
+                      <Form.Label>Etiqueta</Form.Label>
+                      <InputGroup hasValidation>
+                        <InputGroup.Text id="inputGroupPrepend">
+                          @
+                        </InputGroup.Text>
+                        <Form.Control
+                          type="text"
+                          placeholder="Taskname"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please choose a task name.
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Form.Group controlId="validationCustomUsername">
+                      <Form.Select aria-label="Estado">
+                        <option>Estado</option>
+                        <option value="1">Pendiente</option>
+                        <option value="2">En Proceso</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
           </Form>
         </Container>
       </Modal.Body>
@@ -227,4 +215,3 @@ function MydModalWithGrid(props) {
     </Modal>
   );
 }
-

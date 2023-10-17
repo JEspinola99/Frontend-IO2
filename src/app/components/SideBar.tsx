@@ -6,7 +6,7 @@ interface Props {
 
 const SideBar = () => {
   return (
-    <div className="fixed inset-y-16 left-0 w-40 h-full bg-white">
+    <div className="fixed inset-y-20 left-0 w-40 h-full bg-white">
       <ul className="flex flex-col text-lg">
         <li className="flex justify-center items-center flex-col py-5 mt-auto text-gray-500">
           <svg
