@@ -24,11 +24,6 @@ export default function Boards() {
   const { handleLogout } = useLoginForm()
   const email = useUserStore((state) => state.email);
 
-  const [smShow, setSmShow] = useState(false);
-
-  const [lgShow, setLgShow] = useState(false);
-  const handleClose = () => setLgShow(false);
-  const handleShow = () => setLgShow(true);
 
   const [modalShow, setModalShow] = useState(false);
 

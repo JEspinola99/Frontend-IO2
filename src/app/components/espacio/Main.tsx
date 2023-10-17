@@ -1,11 +1,14 @@
 "use client"
 import Encabezado from "@/app/head/page"
 import { Button } from "react-bootstrap"
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FormProvider, useForm } from "react-hook-form"
 import { CreateSpaceModal } from "../Main/Modal"
 import { useState } from "react"
 import { createSpace, getSpace, updateSpace } from "@/services/spaceService"
 import { getSpaceUsers } from "@/services/spaceUserService"
+import { CreateTableroModal } from "./Modal";
+//import { createBoards } from "@/services/boardsService";
 
 export const Main = ({ data, id, users, usersInSpace }: any) => {
 
@@ -42,9 +45,19 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
         setSpaceData(() => ({nombre: res.data.nombre, miembros: users}))
         handleClose()
     }
-
+    //este es del model del tablero
+    const [modalShow, setModalShow] = useState(false);
+  
     return (
+
         <FormProvider {...methods}>
+
+
+            <CreateTableroModal
+                show={modalShow}
+                onHide={() => setModalShow(false)} 
+
+            />
             <CreateSpaceModal
                 show={show}
                 handleClose={handleClose}
@@ -67,6 +80,7 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
                     <div key={item.id}>{item.nombre}</div>
                 ))
             }
+            <Button onClick={() => setModalShow(true)}>crear tablero</Button>
 
         </FormProvider>
     )
