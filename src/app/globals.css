@@ -1,18 +1,20 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "bootstrap/dist/css/bootstrap.min.css";
 
-html,body{
-position: static;
+html,
+body {
+  position: static;
   min-height: 100vh;
-  background-color: #E1E8EE;
+  background-color: #e1e8ee;
   /* display: flex;
   align-items: center;
   justify-content: center; */
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
-
 
 .form-structor {
   background-color: #222;
@@ -21,18 +23,21 @@ position: static;
   width: 350px;
   position: relative;
   overflow: hidden;
-  
+
   &::after {
-    content: '';
-    opacity: .8;
+    content: "";
+    opacity: 0.8;
     position: absolute;
-    top: 0;right:0;bottom:0;left:0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-repeat: no-repeat;
     background-position: left bottom;
     background-size: 950px;
-    background-image: url('fondo.jpeg');
+    background-image: url("fondo.jpeg");
   }
-  
+
   .signup {
     position: absolute;
     top: 50%;
@@ -40,16 +45,16 @@ position: static;
     -webkit-transform: translate(-50%, -50%);
     width: 65%;
     z-index: 5;
-    -webkit-transition: all .3s ease;
-    
+    -webkit-transition: all 0.3s ease;
+
     .form-title {
       color: #fff;
       font-size: 1.7em;
-      text-align: center;  
+      text-align: center;
       font-family: "Times New Roman", serif;
-      font-variant: CARLOMAGNO
+      font-variant: CARLOMAGNO;
     }
-    
+
     .form-holder {
       border-radius: 15px;
       background-color: #fff;
@@ -57,26 +62,23 @@ position: static;
       margin-top: 50px;
       opacity: 1;
       visibility: visible;
-      -webkit-transition: all .3s ease;
-      
-     
-        
-        &:last-child {
-          border-bottom: 0;
-        }
-        &::-webkit-input-placeholder {
-          color: rgba(0,0,0,0.4);
-        }
-      
+      -webkit-transition: all 0.3s ease;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+      &::-webkit-input-placeholder {
+        color: rgba(0, 0, 0, 0.4);
+      }
     }
-    
+
     .submit-btn {
-      background-color: rgba(0,0,0,0.4);
-      color: rgba(256,256,256,0.7);
-      border:0;
+      background-color: rgba(0, 0, 0, 0.4);
+      color: rgba(256, 256, 256, 0.7);
+      border: 0;
       border-radius: 15px;
       display: block;
-      margin: 15px auto; 
+      margin: 15px auto;
       padding: 15px 45px;
       width: 100%;
       font-size: 13px;
@@ -84,15 +86,15 @@ position: static;
       cursor: pointer;
       opacity: 1;
       visibility: visible;
-      -webkit-transition: all .3s ease;
-      
+      -webkit-transition: all 0.3s ease;
+
       &:hover {
-        transition: all .3s ease;
-        background-color: rgba(0,0,0,0.8);
+        transition: all 0.3s ease;
+        background-color: rgba(0, 0, 0, 0.8);
       }
     }
   }
-} 
+}
 
 /*ESPACIO DE TRABAJO*/
 .barra-superior {
@@ -116,12 +118,12 @@ position: static;
     display: block;
 
     &:hover {
-      color: rgba(256,256,256,0.7);
-      background-color: rgba(0,0,0,0.8);
+      color: rgba(256, 256, 256, 0.7);
+      background-color: rgba(0, 0, 0, 0.8);
     }
   }
 
-  .crear{
+  .crear {
     background: #fff;
     color: black;
     position: absolute;
@@ -130,12 +132,12 @@ position: static;
     display: block;
 
     &:hover {
-      color: rgba(256,256,256,0.7);
-      background-color: rgba(0,0,0,0.8);
+      color: rgba(256, 256, 256, 0.7);
+      background-color: rgba(0, 0, 0, 0.8);
     }
   }
 
-  .task-btn{
+  .task-btn {
     background: #fff;
     color: black;
     position: absolute;
@@ -144,14 +146,12 @@ position: static;
     display: block;
 
     &:hover {
-      color: rgba(256,256,256,0.7);
-      background-color: rgba(0,0,0,0.8);
+      color: rgba(256, 256, 256, 0.7);
+      background-color: rgba(0, 0, 0, 0.8);
     }
   }
-  
- 
-  .textbox {
 
+  .textbox {
     position: absolute;
     top: 5px;
     width: 20%;
@@ -163,9 +163,7 @@ position: static;
   }
 }
 
-
-
-.principal{
+.principal {
   border-radius: 10px;
   border-color: black;
   border-style: solid;
@@ -175,35 +173,25 @@ position: static;
   top: 62px;
   bottom: 0;
   width: 100%;
- 
-
-
-  
-
 }
 
-
 /*boton de la ventana flotante*/
-.boton{
+.boton {
   background: #fff;
   color: black;
   position: absolute;
   top: 0;
-  lefth: 0;
+  left: 0;
   display: block;
-  
+
   &:hover {
-    transition: all .3s ease;
-    background-color: rgba(0,0,0,0.8)
+    transition: all 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
-
 .kanbanpos {
- 
   position: absolute;
   top: 65px;
   left: 25px;
 }
-
-
