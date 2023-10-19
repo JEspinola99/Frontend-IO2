@@ -3,7 +3,6 @@
 @tailwind utilities;
 @import "bootstrap/dist/css/bootstrap.min.css";
 
-html,
 body {
   position: static;
   min-height: 100vh;

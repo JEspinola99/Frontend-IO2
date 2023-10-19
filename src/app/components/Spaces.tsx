@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
-import { CreateSpaceModal } from "./Main/Modal";
+import { CreateSpaceModal } from "./Main/SpaceModal";
 import Link from "next/link";
 import { createSpace } from "@/services/spaceService";
 
@@ -28,41 +28,33 @@ export default function Spaces({ data, nombre, id, users }: any) {
   };
 
   return (
-    <>
-      <div>
-        <div>
-          <FormProvider {...methods}>
-            <CreateSpaceModal
-              show={show}
-              handleClose={handleClose}
-              onSubmit={handleSubmit}
-              handleSubmit={methods.handleSubmit}
-            />
-            <main>
-              <Container fluid>
-                <Row>
-                  <h1>Bienvenido a TaskBoard {nombre}</h1>
-                </Row>
-                <Row>
-                  <Col>
-                    <h2>Tus Espacios de trabajo</h2>
-                    {boards?.map((space: any) => (
-                      <div key={space.id}>
-                        <Link href={`/espacio/${space.id}`}>
-                          {space.nombre}
-                        </Link>
-                      </div>
-                    ))}
-                  </Col>
-                  <Col>
-                    <Button onClick={handleOpen}>Crear Espacio</Button>
-                  </Col>
-                </Row>
-              </Container>
-            </main>
-          </FormProvider>
-        </div>
-      </div>
-    </>
+    <div className="p-5 py-20 left-40  fixed inset-y-16 w-full h-ful justify-between">
+      <FormProvider {...methods}>
+        <CreateSpaceModal
+          show={show}
+          handleClose={handleClose}
+          onSubmit={handleSubmit}
+          handleSubmit={methods.handleSubmit}
+        />
+        <Container fluid>
+          <Row>
+            <h1>Bienvenido a TaskBoard {nombre}</h1>
+          </Row>
+          <Row>
+            <Col>
+              <h2>Tus Espacios de trabajo</h2>
+              {boards?.map((space: any) => (
+                <div key={space.id}>
+                  <Link href={`/espacio/${space.id}`}>{space.nombre}</Link>
+                </div>
+              ))}
+            </Col>
+            <Col>
+              <Button onClick={handleOpen}>Crear Espacio</Button>
+            </Col>
+          </Row>
+        </Container>
+      </FormProvider>
+    </div>
   );
 }

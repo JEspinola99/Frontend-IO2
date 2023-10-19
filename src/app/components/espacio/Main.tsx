@@ -3,11 +3,11 @@ import Encabezado from "@/app/head/page";
 import { Button } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { FormProvider, useForm } from "react-hook-form";
-import { CreateSpaceModal } from "../Main/Modal";
+import { CreateSpaceModal } from "../Main/SpaceModal";
 import { useState } from "react";
 import { createSpace, getSpace, updateSpace } from "@/services/spaceService";
 import { getSpaceUsers } from "@/services/spaceUserService";
-import { CreateTableroModal } from "./Modal";
+import { CreateBoardModal } from "./BoardModal";
 import Link from "next/link";
 //import { createBoards } from "@/services/boardsService";
 
@@ -30,10 +30,12 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
   });
 
   const [show, setShow] = useState(false);
+
   const handleClose = () => {
     methods.reset();
     setShow(() => false);
   };
+
   const handleOpen = async () => {
     const { data } = await getSpaceUsers(id);
     methods.setValue("nombre", data.nombre);
@@ -60,29 +62,33 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <FormProvider {...methods}>
-      <CreateTableroModal show={modalShow} onHide={() => setModalShow(false)} />
-      <CreateSpaceModal
-        show={show}
-        handleClose={handleClose}
-        onSubmit={handleSubmit}
-        handleSubmit={methods.handleSubmit}
-        edit={true}
-      />
+    <div className="p-5 py-20 left-40  fixed inset-y-16 w-full h-ful justify-between">
+      <FormProvider {...methods}>
+        <CreateSpaceModal
+          show={show}
+          handleClose={handleClose}
+          onSubmit={handleSubmit}
+          handleSubmit={methods.handleSubmit}
+          edit={true}
+        />
 
-      <h1>Espacio: {spaceData.nombre}</h1>
-      <Button onClick={handleOpen}>Editar</Button>
-      <h2>Miembros</h2>
-      {spaceData.miembros?.map((miembro: any) => (
-        <div key={miembro.id}>{miembro.email}</div>
-      ))}
-      <h2>Tableros</h2>
-      {data.Tablero?.map((item: any) => (
-        <div key={item.id}>
-          <Link href={`/boards/`}>{item.nombre}</Link>
-        </div>
-      ))}
-      <Button onClick={() => setModalShow(true)}>crear tablero</Button>
-    </FormProvider>
+        <h1>Espacio: {spaceData.nombre}</h1>
+        <Button onClick={handleOpen}>Editar</Button>
+        <h2>Miembros</h2>
+        {spaceData.miembros?.map((miembro: any) => (
+          <div key={miembro.id}>{miembro.email}</div>
+        ))}
+        <h2>Tableros</h2>
+        {data.Tablero?.map((item: any) => (
+          <div key={item.id}>
+            <Link href={`/boards/`}>{item.nombre}</Link>
+          </div>
+        ))}
+      </FormProvider>
+      <FormProvider {...methods}>
+        <CreateBoardModal show={modalShow} onHide={() => setModalShow(false)} />
+        <Button onClick={() => setModalShow(true)}>crear tablero</Button>
+      </FormProvider>
+    </div>
   );
 };

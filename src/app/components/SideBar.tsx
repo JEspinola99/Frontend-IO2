@@ -6,9 +6,9 @@ interface Props {
 
 const SideBar = () => {
   return (
-    <div className="fixed inset-y-20 left-0 w-40 h-full bg-white">
+    <div className="fixed inset-y-22 left-0 w-40 h-full bg-white">
       <ul className="flex flex-col text-lg">
-        <li className="flex justify-center items-center flex-col py-5 mt-auto text-gray-500">
+        <li className="flex justify-center items-center flex-col py-5 mt-auto text-gray-500  hover:bg-sky-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -25,7 +25,7 @@ const SideBar = () => {
           </svg>
           Espacios
         </li>
-        <li className="flex justify-center font-bold items-center flex-col py-5 border-l-4 border-blue-900 text-blue-900">
+        <li className="flex justify-center font-bold items-center flex-col py-5 border-l-4  hover:bg-sky-200 border-blue-900 text-blue-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -42,7 +42,7 @@ const SideBar = () => {
           </svg>
           Tableros
         </li>
-        <li className="flex justify-center items-center flex-col py-5 text-gray-500">
+        <li className="flex justify-center items-center flex-col py-5 text-gray-500  hover:bg-sky-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -59,7 +59,7 @@ const SideBar = () => {
           </svg>
           Miembros
         </li>
-        <li className="flex justify-center items-center flex-col py-5  text-gray-500">
+        <li className="flex justify-center items-center flex-col py-5  text-gray-500  hover:bg-sky-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

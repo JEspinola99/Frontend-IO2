@@ -15,7 +15,7 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
-import { Button, Card, Row } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import CardGroup from "react-bootstrap/CardGroup";
 
 const defaultCols: Column[] = [
@@ -54,39 +54,40 @@ function KanbanBoard() {
   );
 
   return (
-    <div className="py-50">
+    <>
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <SortableContext items={columnsId}>
-          <Row className="kanbanpos">
-            {columns.map((col) => (
-              <ColumnContainer
-                key={col.id}
-                column={col}
-                deleteColumn={deleteColumn}
-                updateColumn={updateColumn}
-                createTask={createTask}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
-                tasks={tasks.filter((task) => task.columnId === col.id)}
-              />
-            ))}
-          </Row>
-        </SortableContext>
-
-        <Button
-          variant="primary"
-          onClick={() => {
-            createNewColumn();
-          }}
-          className=""
-        >
-          Add Column
-        </Button>
+        <div className="fixed inset-y-50 w-full justify-between">
+          <SortableContext items={columnsId}>
+            <Col className="scroll-smooth md:scroll-auto grid grid-flow-col gap-3 my-3 justify-start kanbanpos">
+              {columns.map((col) => (
+                <ColumnContainer
+                  key={col.id}
+                  column={col}
+                  deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={tasks.filter((task) => task.columnId === col.id)}
+                />
+              ))}
+              <span
+                onClick={() => {
+                  createNewColumn();
+                }}
+                className="cerrar"
+                // variant="primary"
+              >
+                Add Column
+              </span>
+            </Col>
+          </SortableContext>
+        </div>
 
         {createPortal(
           <DragOverlay>
@@ -114,7 +115,7 @@ function KanbanBoard() {
           document.body
         )}
       </DndContext>
-    </div>
+    </>
   );
 
   function createTask(columnId: Id) {
