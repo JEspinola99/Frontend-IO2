@@ -13,7 +13,6 @@ import { Controller, FormProvider } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast';
 import Modal from 'react-bootstrap/Modal';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
-import { PageProps } from '../../../../.next/types/app/layout'
 import { getSpace } from '@/services/spaceService'
 import Encabezado from "../../head/page";
 import { Main } from '@/app/components/espacio/Main'
@@ -23,17 +22,19 @@ import { getSpaceUsers } from '@/services/spaceUserService'
 
 
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: any) {
   const id = params.id
   const { data } = await getSpace(id)
+  console.log(data)
 
   const usersResponse = await getAllUsers()
 
   const users = usersResponse.data.map((user:any) =>({ value: user.id, label: user.email })).filter((user:any) => user.value != id)
   
   const usersInSpace = await getSpaceUsers(id)
+  
 
   return (
-    <Main data={data} id={id} users={users} usersInSpace={usersInSpace?.data.usuarios} />
+    <Main data={data} id={id} users={users} usersInSpace={usersInSpace?.data.usuarios} tablero={data?.tablero} />
   )
 }

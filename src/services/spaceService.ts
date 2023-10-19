@@ -14,3 +14,8 @@ export const updateSpace = (data: any, id:number) => {
     const url = `work-space/${id}`
     return apiClient.put(url, data)
 }
+
+export const createBoard = (data:any) => {
+    const url = `boards`
+    return apiClient.post(url, data)
+}
