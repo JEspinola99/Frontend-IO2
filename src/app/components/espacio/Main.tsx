@@ -5,10 +5,16 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { FormProvider, useForm } from "react-hook-form";
 import { CreateSpaceModal } from "../Main/SpaceModal";
 import { useState } from "react";
-import { createSpace, getSpace, updateSpace } from "@/services/spaceService";
+import {
+  createBoard,
+  createSpace,
+  getSpace,
+  updateSpace,
+} from "@/services/spaceService";
 import { getSpaceUsers } from "@/services/spaceUserService";
 import { CreateBoardModal } from "./BoardModal";
 import Link from "next/link";
+import { number, string } from "yup";
 //import { createBoards } from "@/services/boardsService";
 
 export const Main = ({ data, id, users, usersInSpace }: any) => {
@@ -21,8 +27,6 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
       options: users,
     },
   });
-
-  console.log(usersInSpace);
 
   const [spaceData, setSpaceData] = useState({
     nombre: data.nombre,
@@ -58,8 +62,47 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
     setSpaceData(() => ({ nombre: res.data.nombre, miembros: users }));
     handleClose();
   };
+
   //este es del model del tablero
-  const [modalShow, setModalShow] = useState(false);
+
+  const [boardModalShow, setBoardModalShow] = useState(false);
+  const [currentDate, setCurrentDate] = useState(getDate());
+
+  const boardMethod = useForm({
+    reValidateMode: "onChange",
+    defaultValues: {
+      nombre: "",
+      fecha: currentDate,
+      boardId: data.id,
+    },
+  });
+
+  const handleCloseBoardModal = () => {
+    boardMethod.reset();
+    setBoardModalShow(false);
+  };
+
+  const handleSubmitBoardModal = async (data: any) => {
+    const fetchData = {
+      nombre: data.nombre,
+      boardid: data.boardId,
+    };
+    console.log(fetchData);
+    const res = await createBoard(fetchData);
+    handleCloseBoardModal();
+  };
+
+  const handleOpenBoardModal = () => {
+    setBoardModalShow(true);
+  };
+
+  function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+    return date + "/" + month + "/" + year;
+  }
 
   return (
     <div className="p-5 py-20 left-40  fixed inset-y-16 w-full h-ful justify-between">
@@ -85,9 +128,15 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
           </div>
         ))}
       </FormProvider>
-      <FormProvider {...methods}>
-        <CreateBoardModal show={modalShow} onHide={() => setModalShow(false)} />
-        <Button onClick={() => setModalShow(true)}>crear tablero</Button>
+      <FormProvider {...boardMethod}>
+        <CreateBoardModal
+          show={boardModalShow}
+          handleClose={handleCloseBoardModal}
+          onSubmit={handleSubmitBoardModal}
+          handleSubmit={boardMethod.handleSubmit}
+          edit={true}
+        />
+        <Button onClick={handleOpenBoardModal}>crear tablero</Button>
       </FormProvider>
     </div>
   );

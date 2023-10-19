@@ -33,6 +33,7 @@ export const CreateBoardModal = ({
 
     setValidated(true);
   };
+
   const { register, setValue, getValues } = useFormContext();
 
   return (
@@ -61,7 +62,7 @@ export const CreateBoardModal = ({
         <Button variant="secondary" onClick={handleClose}>
           Cerrar
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit(onSubmit)}>
           Agregar
         </Button>
       </Modal.Footer>

@@ -14,7 +14,6 @@ export default function Spaces({ data, nombre, id, users }: any) {
   };
   const handleOpen = () => setShow(() => true);
   const [boards, setBoards] = useState(data);
-  console.log(id);
 
   const methods = useForm({
     reValidateMode: "onChange",
@@ -22,6 +21,7 @@ export default function Spaces({ data, nombre, id, users }: any) {
   });
 
   const handleSubmit = async (data: any) => {
+    console.log(data);
     const res = await createSpace(data);
     setBoards((current: any) => current.concat(res?.data));
     handleClose();

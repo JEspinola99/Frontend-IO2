@@ -26,7 +26,7 @@ export default function Encabezado() {
         <Container>
           <Navbar.Brand href="/">TaskBoard</Navbar.Brand>
           <Nav className="me-auto"></Nav>
-          <div className="mb-2 ">
+          <div>
             {["start"].map((direction) => (
               <DropdownButton
                 as={ButtonGroup}
@@ -54,11 +54,7 @@ export default function Encabezado() {
                 }
               >
                 <Dropdown.Item eventKey="1">
-                  <Button
-                    className="w-20"
-                    variant="secondary"
-                    onClick={handleLogout}
-                  >
+                  <Button variant="secondary" onClick={handleLogout}>
                     Cerrar Sesión
                   </Button>
                 </Dropdown.Item>
