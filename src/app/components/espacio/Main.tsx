@@ -12,7 +12,6 @@ import { useSpaceStore } from "@/store/space"
 export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
 
   const { setSpaceData, nombre, miembros, tableros  } = useSpaceStore()
-  console.log(tablero)
 
 
   useEffect(() => {
@@ -30,19 +29,20 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
   }
 
   const handleOpen = async () => {
-    const { data } = await getSpaceUsers(id)
-    const users = data.usuarios?.map((user: any) => ({ value: user.id, label: user.email })).filter((user: any) => user.value != id)
+    // const { data } = await getSpaceUsers(id)
+    // const users = data.usuarios?.map((user: any) => ({ value: user.id, label: user.email })).filter((user: any) => user.value != id)
     // setUsers(users)
     setShow(() => true)
   }
 
 
   const editSpace = async (data: any) => {
-    const fetchData = { creadorId: data.creadorId, nombre: data.nombre, usuarios: data.usuarios || [] }
-    const res = await updateSpace(fetchData, id)
-    const newUsers = await getSpaceUsers(id)
-    const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id)
-    handleClose()
+    console.log(data)
+    // const fetchData = { creadorId: data.creadorId, nombre: data.nombre, usuarios: data.usuarios || [] }
+    // const res = await updateSpace(fetchData, id)
+    // const newUsers = await getSpaceUsers(id)
+    // const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id)
+    // handleClose()
   }
 
   const createBoardHandler = (data: any) => {
@@ -66,12 +66,13 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
       <UpdateSpaceModal
         show={show}
         handleClose={handleClose}
-        onSubmit={editSpace}
+        editSpace={editSpace}
         edit={true}
+        id={id}
       />
       <Encabezado />
       <h1>Espacio: {nombre}</h1>
-      {/* <Button onClick={handleOpen}>Editar</Button> */}
+      <Button onClick={handleOpen}>Editar</Button>
       <h2>Miembros</h2>
       {
         miembros?.map((miembro: any) => (
