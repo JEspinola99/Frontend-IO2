@@ -1,7 +1,6 @@
 "use client"
 import Encabezado from "@/app/head/page"
 import { Button } from "react-bootstrap"
-import { CreateSpaceModal } from "../Main/Modal"
 import { useState, useEffect } from "react"
 import { createBoard, createSpace, getSpace, updateSpace } from "@/services/spaceService"
 import { getSpaceUsers } from "@/services/spaceUserService"
@@ -13,11 +12,27 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
 
   const { setSpaceData, nombre, miembros, tableros  } = useSpaceStore()
 
+  const [spaceData, setSpaceData] = useState({
+    nombre: data.nombre,
+    miembros: usersInSpace,
+  });
 
   useEffect(() => {
     setSpaceData({nombre: data.nombre, miembros: usersInSpace, opciones: users, tableros: tablero})
   }, [])
 
+  const handleSubmit = async (data: any) => {
+    const fetchData = {
+      creadorId: data.creadorId,
+      nombre: data.nombre,
+      usuarios: data.usuarios || [],
+    };
+    const res = await updateSpace(fetchData, id);
+    const newUsers = await getSpaceUsers(id);
+    const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id);
+    setSpaceData(() => ({ nombre: res.data.nombre, miembros: users }));
+    handleClose();
+  };
 
   const [showBoardModal, setShowBoardModal] = useState(false)
   const handleOpenBoardModal = () => setShowBoardModal(() => true)
