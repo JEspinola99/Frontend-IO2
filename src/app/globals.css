@@ -194,3 +194,28 @@ body {
   top: 65px;
   left: 25px;
 }
+
+
+.boardItem:hover{
+  background-color: blue;
+}
+
+.boardItem.active {
+  background-color: green;
+}
+
+.mainContainer {
+  height: 100vh;
+}
+
+.leftColumn {
+  height: 100%;
+  border-right: thin black solid;
+  padding: 1rem;
+}
+
+.rightColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

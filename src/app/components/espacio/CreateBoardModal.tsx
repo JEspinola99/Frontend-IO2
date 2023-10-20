@@ -1,8 +1,9 @@
-import InputValidated from '@/components/common/inputValidated';
 // import { createSpaceStore } from '@/store/space';
+import  InputValidated  from '@/components/common/inputValidated';
 import { IBoard, useSpaceStore } from '@/store/space';
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 export const CreateBoardModal = ({ show, handleClose, createBoard }: any) => {
 
@@ -15,12 +16,21 @@ export const CreateBoardModal = ({ show, handleClose, createBoard }: any) => {
 
     const onSubmit = async(fetchData: any) => {
         console.log(tableros)
-        const { data  } = await createBoard(fetchData)
-        const newBoard:IBoard = {nombre: data.nombre, id: data.id}
-        const newBoards = tableros.concat(newBoard)
-        setNewBoard(newBoards)
-        handleClose()
-        methods.reset()
+        try{
+            const { data  } = await createBoard(fetchData)
+            const newBoard:IBoard = {nombre: data.nombre, id: data.id}
+            const newBoards = tableros.concat(newBoard)
+            setNewBoard(newBoards)
+            handleClose()
+            methods.reset()
+        } catch(error: any) {
+            const message = error?.response?.data;
+            console.log(message)
+            toast.error(message)
+        } finally {
+            handleClose()
+            methods.reset()
+        }
     }
 
     return (

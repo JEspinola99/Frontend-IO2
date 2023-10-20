@@ -18,9 +18,11 @@ export interface ISpace {
     tableros: IBoard[]
     opciones: string[]
     setNewBoard: (tablero:IBoard[]) => void;
+    boardActive: IBoard;
     setUsers: (miembros:[]) => void;
     setSpaceData: (spaceData: ISpaceData) => void;
     setName: (nombre: string) => void;
+    setBoardActive: (board: IBoard) => void;
 }
 
 interface ISpaceValues {
@@ -28,6 +30,7 @@ interface ISpaceValues {
     miembros: string[]
     tableros: IBoard[]
     opciones: string[]
+    boardActive: IBoard
 }
 
 export const useSpaceStore = create<ISpace>((set) => ({
@@ -35,8 +38,10 @@ export const useSpaceStore = create<ISpace>((set) => ({
     miembros: [],
     tableros: [],
     opciones: [],
+    boardActive: {id: 0, nombre: ''},
     setNewBoard: (tableros) => set((state) => ({...state, tableros})),
     setUsers: (miembros) => set((state) => ({...state, miembros})),
     setSpaceData: (spaceData) => set((state) => ({...state, ...spaceData})),
-    setName: (nombre) => set((state) => ({...state, nombre}))
+    setName: (nombre) => set((state) => ({...state, nombre})),
+    setBoardActive: (boardActive) => set((state) => ({...state, boardActive}))
 }))

@@ -1,77 +1,58 @@
 "use client"
 import Encabezado from "@/app/head/page"
-import { Button } from "react-bootstrap"
+import { Button, Container, Row, Col } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import { createBoard, createSpace, getSpace, updateSpace } from "@/services/spaceService"
 import { getSpaceUsers } from "@/services/spaceUserService"
 import { CreateBoardModal } from "./CreateBoardModal"
 import { UpdateSpaceModal } from "./UpdateSpaceModal"
 import { useSpaceStore } from "@/store/space"
+import { Toaster } from "react-hot-toast"
+import { BoardList } from "./BoardsList"
+import { MemberList } from "./MemberList"
+import { useSpaceComponent } from "@/hooks/useSpaceComponent"
 
-export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
+interface IMain {
+  data: any
+  id: number
+  usersInSpace: any
+  tablero: any
+  users: any
+}
 
-  const { setSpaceData, nombre, miembros, tableros  } = useSpaceStore()
 
-  const [spaceData, setSpaceData] = useState({
-    nombre: data.nombre,
-    miembros: usersInSpace,
-  });
+export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
+
+  const { setSpaceData, nombre, miembros, tableros, boardActive } = useSpaceStore()
+
+  const {
+    createBoardHandler,
+    handleClose,
+    handleCloseBoardModal,
+    show,
+    showBoardModal,
+    handleOpenBoardModal,
+    handleOpen
+  } = useSpaceComponent(id)
 
   useEffect(() => {
-    setSpaceData({nombre: data.nombre, miembros: usersInSpace, opciones: users, tableros: tablero})
+    setSpaceData({ nombre: data.nombre, miembros: usersInSpace, opciones: users, tableros: tablero })
   }, [])
 
-  const handleSubmit = async (data: any) => {
-    const fetchData = {
-      creadorId: data.creadorId,
-      nombre: data.nombre,
-      usuarios: data.usuarios || [],
-    };
-    const res = await updateSpace(fetchData, id);
-    const newUsers = await getSpaceUsers(id);
-    const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id);
-    setSpaceData(() => ({ nombre: res.data.nombre, miembros: users }));
-    handleClose();
-  };
+  console.log(tableros)
 
-  const [showBoardModal, setShowBoardModal] = useState(false)
-  const handleOpenBoardModal = () => setShowBoardModal(() => true)
-  const handleCloseBoardModal = () => setShowBoardModal(() => false)
-
-  const [show, setShow] = useState(false)
-  const handleClose = () => {
-    setShow(() => false)
-  }
-
-  const handleOpen = async () => {
-    // const { data } = await getSpaceUsers(id)
-    // const users = data.usuarios?.map((user: any) => ({ value: user.id, label: user.email })).filter((user: any) => user.value != id)
-    // setUsers(users)
-    setShow(() => true)
-  }
-
-
-  const editSpace = async (data: any) => {
-    console.log(data)
-    // const fetchData = { creadorId: data.creadorId, nombre: data.nombre, usuarios: data.usuarios || [] }
-    // const res = await updateSpace(fetchData, id)
-    // const newUsers = await getSpaceUsers(id)
-    // const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id)
-    // handleClose()
-  }
-
-  const createBoardHandler = (data: any) => {
-    const fetchData = {
-      nombre: data.nombre,
-      espacioDeTrabajoId: Number(id)
-    }
-    return createBoard(fetchData)
-  }
-
+  // useEffect(() => {
+  //   (async() => {
+  //     const res = await 
+  //   })()
+  // }, [boardActive])
 
 
   return (
-    <>
+    <Container fluid>
+      <Toaster
+        position="top-right"
+      />
       <CreateBoardModal
         show={showBoardModal}
         handleClose={handleCloseBoardModal}
@@ -81,25 +62,28 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: any) => {
       <UpdateSpaceModal
         show={show}
         handleClose={handleClose}
-        editSpace={editSpace}
         edit={true}
         id={id}
       />
-      <Encabezado />
-      <h1>Espacio: {nombre}</h1>
-      <Button onClick={handleOpen}>Editar</Button>
-      <h2>Miembros</h2>
-      {
-        miembros?.map((miembro: any) => (
-          <div key={miembro.id}>{miembro.email}</div>
-        ))
-      }
-      <h2>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h2>
-      {
-        tableros?.map((item: any) => (
-          <div key={item.id}>{item.nombre}</div>
-        ))
-      }
-    </>
+      {/* <Encabezado /> */}
+      <Row className="d-flex mainContainer">
+        <Col className="leftColumn">
+          <h5>Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button></h5>
+          <h6>Miembros</h6>
+          <MemberList miembros={miembros} />
+          <h6>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h6>
+          <BoardList tableros={tableros} />
+        </Col>
+
+        <Col className="rightColumn" sm={8}>
+          <span>{boardActive.nombre}</span>
+          {/* <h1>Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button></h1>
+          <h6>Miembros</h6>
+          <MemberList miembros={miembros} />
+          <h6>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h6>
+          <BoardList tableros={tableros} /> */}
+        </Col>
+      </Row>
+    </Container>
   )
 }

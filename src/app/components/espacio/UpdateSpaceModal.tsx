@@ -7,7 +7,7 @@ import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import Select from 'react-select'
 
-export const UpdateSpaceModal = ({ show, handleClose, editSpace, edit, id }: any) => {
+export const UpdateSpaceModal = ({ show, handleClose, id }: any) => {
 
     
     const { miembros, opciones, nombre, setUsers, setName } = useSpaceStore()
