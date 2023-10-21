@@ -1,16 +1,16 @@
 import InputValidated from '@/components/common/inputValidated';
+import { SpaceContext } from '@/context/SpaceContext';
 import { updateSpace } from '@/services/spaceService';
-import { IBoard, useSpaceStore } from '@/store/space';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { Button, Col, FormControl, Modal, Row } from 'react-bootstrap';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useContext, useEffect } from 'react';
+import { Button, Col, Modal, Row } from 'react-bootstrap';
+import { FormProvider, useForm } from 'react-hook-form';
 import Select from 'react-select'
+import { useStore } from 'zustand';
 
 export const UpdateSpaceModal = ({ show, handleClose, id }: any) => {
 
-    
-    const { miembros, opciones, nombre, setUsers, setName } = useSpaceStore()
+    const store = useContext(SpaceContext)
+    const { miembros, opciones, nombre, setName, setUsers  } = useStore(store, (s) => s)
     
     const methods = useForm({
         reValidateMode: 'onChange',
@@ -19,7 +19,6 @@ export const UpdateSpaceModal = ({ show, handleClose, id }: any) => {
 
     useEffect(() => {
         const usuarios = miembros.map((miembro) => ({value: miembro.id, label: miembro.email}))
-        console.log(miembros)
         methods.setValue('usuarios',usuarios)
         methods.setValue('selectData', opciones)
         methods.setValue('nombre',nombre)

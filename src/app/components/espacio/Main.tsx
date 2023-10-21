@@ -1,28 +1,31 @@
 "use client"
 import Encabezado from "@/app/head/page"
 import { Button, Container, Row, Col } from "react-bootstrap"
-import { useState, useEffect } from "react"
-import { createBoard, createSpace, getBoard, getSpace, updateSpace } from "@/services/spaceService"
-import { getSpaceUsers } from "@/services/spaceUserService"
+import { useContext } from "react"
 import { CreateBoardModal } from "./CreateBoardModal"
 import { UpdateSpaceModal } from "./UpdateSpaceModal"
-import { useSpaceStore } from "@/store/space"
+import { IBoard } from "@/store/space"
 import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
+import { Kanban } from "../Kanban/Kanban"
+import { SpaceContext } from "@/context/SpaceContext"
+import { useStore } from "zustand"
+import { CreateColumnModal } from "./CreateColumnModal"
 
-interface IMain {
+export interface IMain {
   data: any;
   id: number;
   usersInSpace: any;
-  tablero: any;
+  boardsDefault: any;
   users: any;
+  firstBoardData: IBoard;
 }
 
-export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
-  const { setSpaceData, nombre, miembros, tableros, boardActive } =
-    useSpaceStore();
+export const Main = () => {
+  const store = useContext(SpaceContext)
+  const { id, nombre, boardActive } = useStore(store, (s) => s)
 
   const {
     createBoardHandler,
@@ -32,24 +35,11 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
     showBoardModal,
     handleOpenBoardModal,
     handleOpen,
+    handleCloseCreateColumnModal,
+    handleOpenCreateColumnModal,
+    showCreateColumnModal,
   } = useSpaceComponent(id);
 
-  useEffect(() => {
-    setSpaceData({
-      nombre: data.nombre,
-      miembros: usersInSpace,
-      opciones: users,
-      tableros: tablero,
-    });
-  }, []);
-
-
-  useEffect(() => {
-     (async() => {
-       const { data  } = await getBoard(boardActive.id)
-       console.log(data)
-     })()
-}, [boardActive])
 
   return (
     <Container fluid>
@@ -66,24 +56,30 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
         edit={true}
         id={id}
       />
+
+      <CreateColumnModal
+      show={showCreateColumnModal}
+      handleClose={handleCloseCreateColumnModal}
+      />
       {/* <Encabezado /> */}
-      <Row className="d-flex mainContainer">
+      <Row className="mainContainer">
         <Col className="leftColumn">
           <h5>
             Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
           </h5>
           <h6>Miembros</h6>
-          <MemberList miembros={miembros} />
+          <MemberList />
           <h6>
             Tableros{" "}
             <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
           </h6>
-          <BoardList tableros={tableros} />
+          <BoardList />
         </Col>
 
-        <Col className="rightColumn" sm={8}>
-          {/* <span>{boardActive.nombre}</span> */}
-          {/* <Board /> */}
+        <Col className="rightColumn" sm={9}>
+          <span>{boardActive.nombre}</span>
+          <Button onClick={handleOpenCreateColumnModal}>Crear Columna</Button>
+          <Kanban />
         </Col>
       </Row>
     </Container>

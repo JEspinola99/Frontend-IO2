@@ -37,12 +37,12 @@ export default function Boards() {
 
   return (
     <MainPage>
-      <div className="overflow-auto">
+      <div className="">
         <div className="flex justify-between w-full h-40">
           <div className="flex items-center space-x-3">
             <h1>Nombre</h1>
 
-            <Button className="secondary" onClick={() => setModalShow(true)}>
+            <Button className="task-btn" onClick={() => setModalShow(true)}>
               Crear Tarea
             </Button>
 
