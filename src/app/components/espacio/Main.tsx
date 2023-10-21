@@ -2,7 +2,7 @@
 import Encabezado from "@/app/head/page"
 import { Button, Container, Row, Col } from "react-bootstrap"
 import { useState, useEffect } from "react"
-import { createBoard, createSpace, getSpace, updateSpace } from "@/services/spaceService"
+import { createBoard, createSpace, getBoard, getSpace, updateSpace } from "@/services/spaceService"
 import { getSpaceUsers } from "@/services/spaceUserService"
 import { CreateBoardModal } from "./CreateBoardModal"
 import { UpdateSpaceModal } from "./UpdateSpaceModal"
@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
+import  Board  from "./board/Board"
 
 interface IMain {
   data: any
@@ -39,13 +40,13 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
     setSpaceData({ nombre: data.nombre, miembros: usersInSpace, opciones: users, tableros: tablero })
   }, [])
 
-  console.log(tableros)
 
-  // useEffect(() => {
-  //   (async() => {
-  //     const res = await 
-  //   })()
-  // }, [boardActive])
+  useEffect(() => {
+     (async() => {
+       const { data  } = await getBoard(boardActive.id)
+       console.log(data)
+     })()
+}, [boardActive])
 
 
   return (
@@ -76,12 +77,8 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
         </Col>
 
         <Col className="rightColumn" sm={8}>
-          <span>{boardActive.nombre}</span>
-          {/* <h1>Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button></h1>
-          <h6>Miembros</h6>
-          <MemberList miembros={miembros} />
-          <h6>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h6>
-          <BoardList tableros={tableros} /> */}
+          {/* <span>{boardActive.nombre}</span> */}
+          {/* <Board /> */}
         </Col>
       </Row>
     </Container>

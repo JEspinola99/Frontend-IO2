@@ -219,3 +219,13 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.boardColumn {
+  border: 1px red solid;
+  background-color: blue;
+}
+
+.containerBoard {
+  border: 1px orange solid;
+  background-color: blue;
+}
