@@ -10,6 +10,7 @@ export interface ISpaceData {
     miembros: []
     tableros: []
     opciones: []
+    boardActive: IBoard
 }
 
 export interface ISpace {

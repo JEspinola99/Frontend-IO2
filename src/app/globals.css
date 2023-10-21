@@ -206,6 +206,7 @@ body {
 
 .mainContainer {
   height: 100vh;
+  border: 5px red solid;
 }
 
 .leftColumn {
@@ -215,17 +216,30 @@ body {
 }
 
 .rightColumn {
-  display: flex;
+  padding-top: 2rem;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .boardColumn {
   border: 1px red solid;
-  background-color: blue;
+  /* background-color: blue; */
+}
+
+.itemDraggable {
+  cursor: grab;
+  display: flex;
+  border: 1px red solid;
+}
+
+.itemBoard {
+  border: 5px blue solid;
+  display: flex;
+  flex-direction: column;
 }
 
 .containerBoard {
   border: 1px orange solid;
-  background-color: blue;
+  max-height: 90vh;
 }

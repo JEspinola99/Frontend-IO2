@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
+import { Kanban } from "../Kanban/Kanban"
 
 interface IMain {
   data: any;
@@ -40,6 +41,7 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
       miembros: usersInSpace,
       opciones: users,
       tableros: tablero,
+      boardActive: {id: tablero[0].id, nombre: tablero[0].nombre}
     });
   }, []);
 
@@ -47,7 +49,6 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
   useEffect(() => {
      (async() => {
        const { data  } = await getBoard(boardActive.id)
-       console.log(data)
      })()
 }, [boardActive])
 
@@ -67,7 +68,7 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
         id={id}
       />
       {/* <Encabezado /> */}
-      <Row className="d-flex mainContainer">
+      <Row className="mainContainer">
         <Col className="leftColumn">
           <h5>
             Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
@@ -81,9 +82,9 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
           <BoardList tableros={tableros} />
         </Col>
 
-        <Col className="rightColumn" sm={8}>
-          {/* <span>{boardActive.nombre}</span> */}
-          {/* <Board /> */}
+        <Col className="rightColumn" sm={9}>
+          <span>{boardActive.nombre}</span>
+          <Kanban />
         </Col>
       </Row>
     </Container>
