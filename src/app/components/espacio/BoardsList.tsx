@@ -1,4 +1,5 @@
 import { SpaceContext } from "@/context/SpaceContext";
+import { getBoard } from "@/services/spaceService";
 import { IBoard, useSpaceStore } from "@/store/space"
 import { useContext, useState } from "react";
 import { useStore } from "zustand"
@@ -12,12 +13,15 @@ export const BoardList = () => {
 
     const store = useContext(SpaceContext)
 
-    const { setBoardActive, boards } = useStore(store, (s) => s)
+    const { setBoardActive, boards, setLoadingKanban } = useStore(store, (s) => s)
 
-    const handleActive = (i: number) => {
+    const handleActive = async(i: number) => {
         setActive(() => i)
-        const newBoardActive = boards.filter((board, index)=> index == i)[0]
-        setBoardActive(newBoardActive)
+        const boardActive = boards.filter((board, index)=> index == i)[0]
+        setLoadingKanban(true)
+        const { data  } = await getBoard(boardActive.id)
+        setLoadingKanban(false)
+        setBoardActive(data)
     }
 
     return (

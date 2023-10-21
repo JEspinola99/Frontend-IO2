@@ -6,6 +6,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { ContainerColumn } from "./Container";
 import { SpaceContext } from "@/context/SpaceContext";
 import { useStore } from "zustand";
+import FidgetSpinner from "react-loader-spinner";
+import { Loader } from "../Loader";
 
 type DNDType = {
     id: UniqueIdentifier;
@@ -19,8 +21,8 @@ type DNDType = {
 export const Kanban = () => {
 
     const store = useContext(SpaceContext)
-    const boardActive = useStore(store, (s) => s.boardActive)
-    const columns = boardActive?.columnas?.map((item) => ({id: item.id, title: item.nombre, items: []}))
+    const { boardActive, loadingKanban } = useStore(store, (s) => s)
+    const columns = boardActive?.columnas?.map((item) => ({ id: item.id, title: item.nombre, items: [] }))
 
     const [containers, setContainers] = useState<DNDType[]>(columns)
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -143,7 +145,7 @@ export const Kanban = () => {
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
 
-        if(
+        if (
             active.id.toString().includes('container') &&
             over?.id.toString().includes('container') &&
             active &&
@@ -163,17 +165,17 @@ export const Kanban = () => {
             setContainers(newItems)
         }
 
-        if(
-            active.id.toString().includes('item') && 
+        if (
+            active.id.toString().includes('item') &&
             over?.id.toString().includes('item') &&
             active &&
             over &&
             active.id !== over.id
-        ){
+        ) {
             const activeContainer = findValuesOfItems(active.id, 'item')
             const overContainer = findValuesOfItems(over.id, 'item')
 
-            if(!activeContainer || !overContainer) return;
+            if (!activeContainer || !overContainer) return;
 
             const activeContainerIndex = containers.findIndex(
                 (container) => container.id == activeContainer.id
@@ -191,7 +193,7 @@ export const Kanban = () => {
                 (item) => item.id === over.id
             )
 
-            if(activeContainerIndex === overContainerIndex) {
+            if (activeContainerIndex === overContainerIndex) {
                 let newItems = [...containers]
                 newItems[activeContainerIndex].items = arrayMove(
                     newItems[activeContainerIndex].items,
@@ -199,7 +201,7 @@ export const Kanban = () => {
                     overItemIndex
                 )
                 setContainers(newItems)
-            }else{
+            } else {
                 let newItems = [...containers]
                 const [removedItem] = newItems[activeContainerIndex].items.splice(
                     activeItemIndex,
@@ -214,7 +216,7 @@ export const Kanban = () => {
             }
         }
 
-        if(
+        if (
             active.id.toString().includes('item') &&
             over?.id.toString().includes('container') &&
             active &&
@@ -224,14 +226,14 @@ export const Kanban = () => {
             const activeContainer = findValuesOfItems(active.id, 'item')
             const overContainer = findValuesOfItems(over.id, 'container')
 
-            if(!activeContainer || !overContainer) return;
+            if (!activeContainer || !overContainer) return;
 
             const activeContainerIndex = containers.findIndex(
                 (container) => container.id === activeContainer.id
             )
 
             const overContainerIndex = containers.findIndex(
-                (container) => container.id === overContainer.id    
+                (container) => container.id === overContainer.id
             )
 
             const activeItemIndex = activeContainer.items.findIndex(
@@ -247,9 +249,9 @@ export const Kanban = () => {
             setContainers(newItems)
         }
         setActiveId(null)
-     }
+    }
 
-    const deleteColumn = (e:any) => { 
+    const deleteColumn = (e: any) => {
         console.log(e)
         const newContainers = containers.filter((container, index) => index != e)
         setContainers(newContainers)
@@ -261,44 +263,47 @@ export const Kanban = () => {
 
     return (
         <Container fluid className="border">
-            <DndContext
-                sensors={sensors}
-                collisionDetection={closestCorners}
-                onDragStart={handleDragStart}
-                onDragMove={handleDragMove}
-                onDragEnd={handleDragEnd}
-                id='list'
-            >
-                <SortableContext items={containers?.map((container) => container.id)}>
-                    <Row className="border">
-                        {
-                            containers?.map((container) => (
-                                <Col sm={2} key={container.id} onClick={() => deleteColumn(container)}>
-                                    <ContainerColumn
-                                        title={container.title}
-                                        key={container.id}
-                                        id={container.id}
-                                        onAddItem={() => {
-                                            setShowAddItemModal(true)
-                                            setCurrentContainerId(container.id)
-                                        }}
-                                    >
-                                        <SortableContext
-                                            items={container?.items?.map((i) => i.id)}
-                                        >
-                                            <div className="flex items-start flex-col gap-y-4">
-                                                {container?.items?.map((item) => (
-                                                    <Items key={item.id} id={item.id} title={item.title} />
-                                                ))}
-                                            </div>
-                                        </SortableContext>
-                                    </ContainerColumn>
-                                </Col>
-                            ))
-                        }
-                    </Row>
-                </SortableContext>
-            </DndContext>
+            {
+                loadingKanban ? <Loader /> :
+                    <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCorners}
+                        onDragStart={handleDragStart}
+                        onDragMove={handleDragMove}
+                        onDragEnd={handleDragEnd}
+                        id='list'
+                    >
+                        <SortableContext items={containers?.map((container) => container.id)}>
+                            <Row className="border">
+                                {
+                                    containers?.map((container) => (
+                                        <Col sm={2} key={container.id} onClick={() => deleteColumn(container)}>
+                                            <ContainerColumn
+                                                title={container.title}
+                                                key={container.id}
+                                                id={container.id}
+                                                onAddItem={() => {
+                                                    setShowAddItemModal(true)
+                                                    setCurrentContainerId(container.id)
+                                                }}
+                                            >
+                                                <SortableContext
+                                                    items={container?.items?.map((i) => i.id)}
+                                                >
+                                                    <div className="flex items-start flex-col gap-y-4">
+                                                        {container?.items?.map((item) => (
+                                                            <Items key={item.id} id={item.id} title={item.title} />
+                                                        ))}
+                                                    </div>
+                                                </SortableContext>
+                                            </ContainerColumn>
+                                        </Col>
+                                    ))
+                                }
+                            </Row>
+                        </SortableContext>
+                    </DndContext>
+            }
         </Container>
     )
 }

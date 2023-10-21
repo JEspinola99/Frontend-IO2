@@ -17,7 +17,7 @@ export default async function Page({ params }: any) {
   const firstBoardData = {
     id: firstBoard.id,
     espacioDeTrabajoId: firstBoard.espacioDeTrabajoId,
-    columnas: firstBoard.Columna,
+    columnas: firstBoard.columnas,
     nombre: firstBoard.nombre
   }
 
@@ -26,8 +26,7 @@ export default async function Page({ params }: any) {
   const users = usersResponse.data.map((user: any) => ({ value: user.id, label: user.email })).filter((user: any) => user.value != id)
 
   const nombre = data?.nombre;
-  const boards = data?.tablero.map((board:any) => ({id: board.id, espacioDeTrabajoId: board.espacioDeTrabajoId, 
-    nombre: board.nombre, columnas: board.Columna}));
+  const boards = data?.tablero
   const opciones = users
 
   const spaceData: ISpaceValues = {
@@ -36,7 +35,8 @@ export default async function Page({ params }: any) {
     boards,
     opciones,
     boardActive: firstBoardData,
-    id
+    id,
+    loadingKanban: false
   }
 
   return (

@@ -18,6 +18,7 @@ export interface ISpaceData {
     boards: []
     opciones: []
     boardActive: IBoard
+    loadingKanban: boolean
 }
 
 export interface ISpace {
@@ -28,11 +29,13 @@ export interface ISpace {
     setNewBoard: (tablero:IBoard[]) => void;
     boardActive: IBoard;
     id: string
+    loadingKanban: boolean
     setUsers: (miembros:[]) => void;
     setSpaceData: (spaceData: ISpaceData) => void;
     setName: (nombre: string) => void;
     setBoardActive: (board: IBoard) => void;
     setNewColumn: (columnas: IColumn[]) => void;
+    setLoadingKanban: (isLoading: boolean)=> void;
 }
 
 export interface ISpaceValues {
@@ -42,20 +45,8 @@ export interface ISpaceValues {
     opciones: string[]
     boardActive: IBoard
     id: string
+    loadingKanban: boolean
 }
-
-// export const useSpaceStore = create<ISpace>((set) => ({
-//     nombre: '',
-//     miembros: [],
-//     boards: [],
-//     opciones: [],
-//     boardActive: {id: 0, nombre: ''},
-//     setNewBoard: (tableros) => set((state) => ({...state, tableros})),
-//     setUsers: (miembros) => set((state) => ({...state, miembros})),
-//     setSpaceData: (spaceData) => set((state) => ({...state, ...spaceData})),
-//     setName: (nombre) => set((state) => ({...state, nombre})),
-//     setBoardActive: (boardActive) => set((state) => ({...state, boardActive}))
-// }))
 
 export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
     const DefaultProps: ISpaceValues = {
@@ -64,7 +55,8 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         boards: [],
         opciones: [],
         boardActive: {id: 0, nombre: '', columnas: []},
-        id: ''
+        id: '',
+        loadingKanban: false
     }
 
     return createStore<ISpace>()((set) => ({
@@ -75,6 +67,7 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         setSpaceData: (spaceData) => set((state) => ({...state, ...spaceData})),
         setName: (nombre) => set((state) => ({...state, nombre})),
         setBoardActive: (boardActive) => set((state) => ({...state, boardActive})),
-        setNewColumn: (columnas) => set((state) => ({boardActive: {...state.boardActive, columnas}}))
+        setNewColumn: (columnas) => set((state) => ({boardActive: {...state.boardActive, columnas}})),
+        setLoadingKanban: (loadingKanban) => set((state) => ({...state, loadingKanban}))
     }))
 }
