@@ -105,7 +105,7 @@ export const Main = ({ data, id, users, usersInSpace }: any) => {
   }
 
   return (
-    <div className="p-5 py-20 left-40  fixed inset-y-16 w-full h-ful justify-between">
+    <div className="w-full">
       <FormProvider {...methods}>
         <CreateSpaceModal
           show={show}
