@@ -37,7 +37,7 @@ export default function Boards() {
 
   return (
     <MainPage>
-      <div className="">
+      <div className="overflow-auto">
         <div className="flex justify-between w-full h-40">
           <div className="flex items-center space-x-3">
             <h1>Nombre</h1>
