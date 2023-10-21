@@ -1,17 +1,18 @@
-import { apiClient } from "@/helpers/validations/login/apiClient"
-import { loginData } from "@/interfaces/login"
+import { apiClient } from "@/helpers/validations/login/apiClient";
+import { loginData } from "@/interfaces/login";
 
 export const login = (data: loginData) => {
-    const url = "auth/signin"
-    return apiClient.post(url, data)
-}
+  const url = "auth/signin";
+  console.log(data);
+  return apiClient.post(url, data);
+};
 
 export const signup = (data: loginData) => {
-    const url = "auth/signup"
-    return apiClient.post(url, data)
-}
+  const url = "auth/signup";
+  return apiClient.post(url, data);
+};
 
 export const signout = () => {
-    const url = "auth/signout"
-    return apiClient.get(url)
-}
+  const url = "auth/signout";
+  return apiClient.get(url);
+};

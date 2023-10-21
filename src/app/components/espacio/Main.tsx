@@ -11,20 +11,18 @@ import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
-import  Board  from "./board/Board"
 
 interface IMain {
-  data: any
-  id: number
-  usersInSpace: any
-  tablero: any
-  users: any
+  data: any;
+  id: number;
+  usersInSpace: any;
+  tablero: any;
+  users: any;
 }
 
-
 export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
-
-  const { setSpaceData, nombre, miembros, tableros, boardActive } = useSpaceStore()
+  const { setSpaceData, nombre, miembros, tableros, boardActive } =
+    useSpaceStore();
 
   const {
     createBoardHandler,
@@ -33,12 +31,17 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
     show,
     showBoardModal,
     handleOpenBoardModal,
-    handleOpen
-  } = useSpaceComponent(id)
+    handleOpen,
+  } = useSpaceComponent(id);
 
   useEffect(() => {
-    setSpaceData({ nombre: data.nombre, miembros: usersInSpace, opciones: users, tableros: tablero })
-  }, [])
+    setSpaceData({
+      nombre: data.nombre,
+      miembros: usersInSpace,
+      opciones: users,
+      tableros: tablero,
+    });
+  }, []);
 
 
   useEffect(() => {
@@ -48,12 +51,9 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
      })()
 }, [boardActive])
 
-
   return (
     <Container fluid>
-      <Toaster
-        position="top-right"
-      />
+      <Toaster position="top-right" />
       <CreateBoardModal
         show={showBoardModal}
         handleClose={handleCloseBoardModal}
@@ -69,10 +69,15 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
       {/* <Encabezado /> */}
       <Row className="d-flex mainContainer">
         <Col className="leftColumn">
-          <h5>Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button></h5>
+          <h5>
+            Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
+          </h5>
           <h6>Miembros</h6>
           <MemberList miembros={miembros} />
-          <h6>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h6>
+          <h6>
+            Tableros{" "}
+            <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
+          </h6>
           <BoardList tableros={tableros} />
         </Col>
 
@@ -82,5 +87,5 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
