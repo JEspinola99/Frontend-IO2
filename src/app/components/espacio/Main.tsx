@@ -1,12 +1,10 @@
 "use client"
 import Encabezado from "@/app/head/page"
 import { Button, Container, Row, Col } from "react-bootstrap"
-import { useState, useEffect, useContext } from "react"
-import { createBoard, createSpace, getBoard, getSpace, updateSpace } from "@/services/spaceService"
-import { getSpaceUsers } from "@/services/spaceUserService"
+import { useContext } from "react"
 import { CreateBoardModal } from "./CreateBoardModal"
 import { UpdateSpaceModal } from "./UpdateSpaceModal"
-import { IBoard, useSpaceStore } from "@/store/space"
+import { IBoard } from "@/store/space"
 import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
@@ -14,6 +12,7 @@ import { useSpaceComponent } from "@/hooks/useSpaceComponent"
 import { Kanban } from "../Kanban/Kanban"
 import { SpaceContext } from "@/context/SpaceContext"
 import { useStore } from "zustand"
+import { CreateColumnModal } from "./CreateColumnModal"
 
 export interface IMain {
   data: any;
@@ -27,7 +26,7 @@ export interface IMain {
 export const Main = () => {
   const store = useContext(SpaceContext)
   const { id, nombre, boardActive } = useStore(store, (s) => s)
-  console.log(boardActive)
+
   const {
     createBoardHandler,
     handleClose,
@@ -36,14 +35,11 @@ export const Main = () => {
     showBoardModal,
     handleOpenBoardModal,
     handleOpen,
+    handleCloseCreateColumnModal,
+    handleOpenCreateColumnModal,
+    showCreateColumnModal,
   } = useSpaceComponent(id);
 
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await getBoard(boardActive.id)
-    })()
-  }, [boardActive])
 
   return (
     <Container fluid>
@@ -59,7 +55,12 @@ export const Main = () => {
         handleClose={handleClose}
         edit={true}
         id={id}
-      /> 
+      />
+
+      <CreateColumnModal
+      show={showCreateColumnModal}
+      handleClose={handleCloseCreateColumnModal}
+      />
       {/* <Encabezado /> */}
       <Row className="mainContainer">
         <Col className="leftColumn">
@@ -77,6 +78,7 @@ export const Main = () => {
 
         <Col className="rightColumn" sm={9}>
           <span>{boardActive.nombre}</span>
+          <Button onClick={handleOpenCreateColumnModal}>Crear Columna</Button>
           <Kanban />
         </Col>
       </Row>

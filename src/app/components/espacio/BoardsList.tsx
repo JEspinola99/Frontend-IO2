@@ -16,8 +16,8 @@ export const BoardList = () => {
 
     const handleActive = (i: number) => {
         setActive(() => i)
-        const boardActive = boards.filter((board, index)=> index == i)
-        setBoardActive({nombre: boardActive[0].nombre, id: boardActive[0].id})
+        const newBoardActive = boards.filter((board, index)=> index == i)[0]
+        setBoardActive(newBoardActive)
     }
 
     return (

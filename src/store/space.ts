@@ -3,7 +3,14 @@ import { createStore } from 'zustand';
 export interface IBoard {
     id: number
     nombre: string
+    columnas: IColumn[]
 } 
+
+export interface IColumn {
+    id: number
+    nombre: string
+    tableroId: number
+}
 
 export interface ISpaceData {
     nombre: string
@@ -25,6 +32,7 @@ export interface ISpace {
     setSpaceData: (spaceData: ISpaceData) => void;
     setName: (nombre: string) => void;
     setBoardActive: (board: IBoard) => void;
+    setNewColumn: (columnas: IColumn[]) => void;
 }
 
 export interface ISpaceValues {
@@ -55,7 +63,7 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         miembros: [],
         boards: [],
         opciones: [],
-        boardActive: {id: 0, nombre: ''},
+        boardActive: {id: 0, nombre: '', columnas: []},
         id: ''
     }
 
@@ -66,6 +74,7 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         setUsers: (miembros) => set((state) => ({...state, miembros})),
         setSpaceData: (spaceData) => set((state) => ({...state, ...spaceData})),
         setName: (nombre) => set((state) => ({...state, nombre})),
-        setBoardActive: (boardActive) => set((state) => ({...state, boardActive}))
+        setBoardActive: (boardActive) => set((state) => ({...state, boardActive})),
+        setNewColumn: (columnas) => set((state) => ({boardActive: {...state.boardActive, columnas}}))
     }))
 }

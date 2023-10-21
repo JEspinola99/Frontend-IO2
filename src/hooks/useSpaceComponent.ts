@@ -1,3 +1,4 @@
+import { ICreateColumn, createColumn } from '@/services/columnService';
 import { createBoard } from '@/services/spaceService';
 import { useSpaceStore } from "@/store/space"
 import { useState } from 'react';
@@ -7,6 +8,10 @@ export const useSpaceComponent = (id: string) => {
   const [showBoardModal, setShowBoardModal] = useState(false)
   const handleOpenBoardModal = () => setShowBoardModal(() => true)
   const handleCloseBoardModal = () => setShowBoardModal(() => false)
+  const [showCreateColumnModal, setShowCreateColumnModal] = useState(() => false)
+
+  const handleOpenCreateColumnModal = () => setShowCreateColumnModal(() => true)
+  const handleCloseCreateColumnModal = () => setShowCreateColumnModal(() => false)
 
   const [show, setShow] = useState(false)
   const handleClose = () => {
@@ -34,7 +39,10 @@ export const useSpaceComponent = (id: string) => {
       showBoardModal,
       show,
       handleClose,
-      handleOpen
+      handleOpen,
+      handleCloseCreateColumnModal,
+      handleOpenCreateColumnModal,
+      showCreateColumnModal,
     }
   )
 }

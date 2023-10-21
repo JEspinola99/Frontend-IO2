@@ -1,6 +1,6 @@
 import { DndContext, DragEndEvent, DragMoveEvent, DragStartEvent, KeyboardSensor, PointerSensor, UniqueIdentifier, closestCorners, useSensor, useSensors } from "@dnd-kit/core"
 import { SortableContext, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Items } from "./Items";
 import { Col, Container, Row } from "react-bootstrap";
 import { ContainerColumn } from "./Container";
@@ -20,7 +20,7 @@ export const Kanban = () => {
 
     const store = useContext(SpaceContext)
     const boardActive = useStore(store, (s) => s.boardActive)
-    const columns = boardActive?.Columna?.map((item) => ({id: item.id, title: item.nombre, items: []}))
+    const columns = boardActive?.columnas?.map((item) => ({id: item.id, title: item.nombre, items: []}))
 
     const [containers, setContainers] = useState<DNDType[]>(columns)
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -249,11 +249,15 @@ export const Kanban = () => {
         setActiveId(null)
      }
 
-    const deleteColumn = (e) => { 
+    const deleteColumn = (e:any) => { 
         console.log(e)
         const newContainers = containers.filter((container, index) => index != e)
         setContainers(newContainers)
     }
+
+    useEffect(() => {
+        setContainers(() => columns)
+    }, [boardActive])
 
     return (
         <Container fluid className="border">
@@ -263,12 +267,13 @@ export const Kanban = () => {
                 onDragStart={handleDragStart}
                 onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
+                id='list'
             >
                 <SortableContext items={containers?.map((container) => container.id)}>
                     <Row className="border">
                         {
                             containers?.map((container) => (
-                                <Col sm={2} onClick={() => deleteColumn(container)}>
+                                <Col sm={2} key={container.id} onClick={() => deleteColumn(container)}>
                                     <ContainerColumn
                                         title={container.title}
                                         key={container.id}
