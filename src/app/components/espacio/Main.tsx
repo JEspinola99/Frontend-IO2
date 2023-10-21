@@ -1,10 +1,7 @@
 "use client";
 import Encabezado from "@/app/head/page";
-import { Button } from "react-bootstrap";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { FormProvider, useForm } from "react-hook-form";
-import { CreateSpaceModal } from "../Main/SpaceModal";
-import { useState } from "react";
+import { Button, Container, Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import {
   createBoard,
   createSpace,
@@ -12,132 +9,92 @@ import {
   updateSpace,
 } from "@/services/spaceService";
 import { getSpaceUsers } from "@/services/spaceUserService";
-import { CreateBoardModal } from "./BoardModal";
-import Link from "next/link";
-import { number, string } from "yup";
-//import { createBoards } from "@/services/boardsService";
+import { CreateBoardModal } from "./CreateBoardModal";
+import { UpdateSpaceModal } from "./UpdateSpaceModal";
+import { useSpaceStore } from "@/store/space";
+import { Toaster } from "react-hot-toast";
+import { BoardList } from "./BoardsList";
+import { MemberList } from "./MemberList";
+import { useSpaceComponent } from "@/hooks/useSpaceComponent";
 
-export const Main = ({ data, id, users, usersInSpace }: any) => {
-  const methods = useForm({
-    reValidateMode: "onChange",
-    defaultValues: {
-      creadorId: Number(id),
-      usuarios: [],
-      nombre: [data.nombre],
-      options: users,
-    },
-  });
+interface IMain {
+  data: any;
+  id: number;
+  usersInSpace: any;
+  tablero: any;
+  users: any;
+}
 
-  const [spaceData, setSpaceData] = useState({
-    nombre: data.nombre,
-    miembros: usersInSpace,
-  });
+export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
+  const { setSpaceData, nombre, miembros, tableros, boardActive } =
+    useSpaceStore();
 
-  const [show, setShow] = useState(false);
+  const {
+    createBoardHandler,
+    handleClose,
+    handleCloseBoardModal,
+    show,
+    showBoardModal,
+    handleOpenBoardModal,
+    handleOpen,
+  } = useSpaceComponent(id);
 
-  const handleClose = () => {
-    methods.reset();
-    setShow(() => false);
-  };
-
-  const handleOpen = async () => {
-    const { data } = await getSpaceUsers(id);
-    methods.setValue("nombre", data.nombre);
-    const users = data.usuarios
-      ?.map((user: any) => ({ value: user.id, label: user.email }))
-      .filter((user: any) => user.value != id);
-    methods.setValue("usuarios", users ?? []);
-    setShow(() => true);
-  };
-
-  const handleSubmit = async (data: any) => {
-    const fetchData = {
-      creadorId: data.creadorId,
+  useEffect(() => {
+    setSpaceData({
       nombre: data.nombre,
-      usuarios: data.usuarios || [],
-    };
-    const res = await updateSpace(fetchData, id);
-    const newUsers = await getSpaceUsers(id);
-    const users = newUsers?.data?.usuarios.filter((user: any) => user.id != id);
-    setSpaceData(() => ({ nombre: res.data.nombre, miembros: users }));
-    handleClose();
-  };
+      miembros: usersInSpace,
+      opciones: users,
+      tableros: tablero,
+    });
+  }, []);
 
-  //este es del model del tablero
+  console.log(tableros);
 
-  const [boardModalShow, setBoardModalShow] = useState(false);
-  const [currentDate, setCurrentDate] = useState(getDate());
-
-  const boardMethod = useForm({
-    reValidateMode: "onChange",
-    defaultValues: {
-      nombre: "",
-      fecha: currentDate,
-      boardId: data.id,
-    },
-  });
-
-  const handleCloseBoardModal = () => {
-    boardMethod.reset();
-    setBoardModalShow(false);
-  };
-
-  const handleSubmitBoardModal = async (data: any) => {
-    const fetchData = {
-      nombre: data.nombre,
-      boardid: data.boardId,
-    };
-    console.log(fetchData);
-    const res = await createBoard(fetchData);
-    handleCloseBoardModal();
-  };
-
-  const handleOpenBoardModal = () => {
-    setBoardModalShow(true);
-  };
-
-  function getDate() {
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const date = today.getDate();
-    return date + "/" + month + "/" + year;
-  }
+  // useEffect(() => {
+  //   (async() => {
+  //     const res = await
+  //   })()
+  // }, [boardActive])
 
   return (
-    <div className="w-full">
-      <FormProvider {...methods}>
-        <CreateSpaceModal
-          show={show}
-          handleClose={handleClose}
-          onSubmit={handleSubmit}
-          handleSubmit={methods.handleSubmit}
-          edit={true}
-        />
+    <Container fluid>
+      <Toaster position="top-right" />
+      <CreateBoardModal
+        show={showBoardModal}
+        handleClose={handleCloseBoardModal}
+        createBoard={createBoardHandler}
+      />
 
-        <h1>Espacio: {spaceData.nombre}</h1>
-        <Button onClick={handleOpen}>Editar</Button>
-        <h2>Miembros</h2>
-        {spaceData.miembros?.map((miembro: any) => (
-          <div key={miembro.id}>{miembro.email}</div>
-        ))}
-        <h2>Tableros</h2>
-        {data.Tablero?.map((item: any) => (
-          <div key={item.id}>
-            <Link href={`/boards/`}>{item.nombre}</Link>
-          </div>
-        ))}
-      </FormProvider>
-      <FormProvider {...boardMethod}>
-        <CreateBoardModal
-          show={boardModalShow}
-          handleClose={handleCloseBoardModal}
-          onSubmit={handleSubmitBoardModal}
-          handleSubmit={boardMethod.handleSubmit}
-          edit={true}
-        />
-        <Button onClick={handleOpenBoardModal}>crear tablero</Button>
-      </FormProvider>
-    </div>
+      <UpdateSpaceModal
+        show={show}
+        handleClose={handleClose}
+        edit={true}
+        id={id}
+      />
+      {/* <Encabezado /> */}
+      <Row className="d-flex mainContainer">
+        <Col className="leftColumn">
+          <h5>
+            Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
+          </h5>
+          <h6>Miembros</h6>
+          <MemberList miembros={miembros} />
+          <h6>
+            Tableros{" "}
+            <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
+          </h6>
+          <BoardList tableros={tableros} />
+        </Col>
+
+        <Col className="rightColumn" sm={8}>
+          <span>{boardActive.nombre}</span>
+          {/* <h1>Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button></h1>
+          <h6>Miembros</h6>
+          <MemberList miembros={miembros} />
+          <h6>Tableros <Button onClick={handleOpenBoardModal}>Crear Tablero</Button></h6>
+          <BoardList tableros={tableros} /> */}
+        </Col>
+      </Row>
+    </Container>
   );
 };
