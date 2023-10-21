@@ -241,4 +241,5 @@ body {
 .containerBoard {
   border: 1px orange solid;
   max-height: 90vh;
+  cursor: default !important;
 }

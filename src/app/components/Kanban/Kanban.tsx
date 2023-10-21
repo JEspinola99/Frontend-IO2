@@ -251,11 +251,7 @@ export const Kanban = () => {
         setActiveId(null)
     }
 
-    const deleteColumn = (e: any) => {
-        console.log(e)
-        const newContainers = containers.filter((container, index) => index != e)
-        setContainers(newContainers)
-    }
+   
 
     useEffect(() => {
         setContainers(() => columns)
@@ -277,7 +273,7 @@ export const Kanban = () => {
                             <Row className="border">
                                 {
                                     containers?.map((container) => (
-                                        <Col sm={2} key={container.id} onClick={() => deleteColumn(container)}>
+                                        <Col sm={2} className="p-1" key={container.id}>
                                             <ContainerColumn
                                                 title={container.title}
                                                 key={container.id}
