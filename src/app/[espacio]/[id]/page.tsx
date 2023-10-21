@@ -1,5 +1,5 @@
 import React from 'react'
-import { getSpace } from '@/services/spaceService'
+import { getBoard, getSpace } from '@/services/spaceService'
 import Encabezado from "../../head/page";
 import { Main } from "@/app/components/espacio/Main";
 import { getAllUsers } from "@/services/userService";
@@ -9,6 +9,12 @@ export default async function Page({ params }: any) {
   const id = params.id
 
   const { data } = await getSpace(id)
+
+  const firstBoard = data?.tablero[0]
+
+  const res = await getBoard(firstBoard.id)
+  const firstBoardData = res?.data
+
 
   const usersResponse = await getAllUsers();
 
@@ -23,7 +29,8 @@ export default async function Page({ params }: any) {
       id={id}
       users={users}
       usersInSpace={usersInSpace?.data.usuarios}
-      tablero={data?.tablero}
+      boardsDefault={data?.tablero}
+      firstBoardData={firstBoardData}
     />
   )
 }

@@ -6,7 +6,7 @@ import { createBoard, createSpace, getBoard, getSpace, updateSpace } from "@/ser
 import { getSpaceUsers } from "@/services/spaceUserService"
 import { CreateBoardModal } from "./CreateBoardModal"
 import { UpdateSpaceModal } from "./UpdateSpaceModal"
-import { useSpaceStore } from "@/store/space"
+import { IBoard, useSpaceStore } from "@/store/space"
 import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
@@ -17,12 +17,13 @@ interface IMain {
   data: any;
   id: number;
   usersInSpace: any;
-  tablero: any;
+  boardsDefault: any;
   users: any;
+  firstBoardData: IBoard;
 }
 
-export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
-  const { setSpaceData, nombre, miembros, tableros, boardActive } =
+export const Main = ({ data, id, users, usersInSpace, boardsDefault, firstBoardData }: IMain) => {
+  const { setSpaceData, nombre, miembros, boards, boardActive } =
     useSpaceStore();
 
   const {
@@ -40,53 +41,53 @@ export const Main = ({ data, id, users, usersInSpace, tablero }: IMain) => {
       nombre: data.nombre,
       miembros: usersInSpace,
       opciones: users,
-      tableros: tablero,
-      boardActive: {id: tablero[0].id, nombre: tablero[0].nombre}
+      boards: boardsDefault,
+      boardActive: firstBoardData
     });
   }, []);
 
 
   useEffect(() => {
-     (async() => {
-       const { data  } = await getBoard(boardActive.id)
-     })()
+    (async () => {
+      const { data } = await getBoard(boardActive.id)
+    })()
 }, [boardActive])
 
-  return (
-    <Container fluid>
-      <Toaster position="top-right" />
-      <CreateBoardModal
-        show={showBoardModal}
-        handleClose={handleCloseBoardModal}
-        createBoard={createBoardHandler}
-      />
+return (
+  <Container fluid>
+    <Toaster position="top-right" />
+    <CreateBoardModal
+      show={showBoardModal}
+      handleClose={handleCloseBoardModal}
+      createBoard={createBoardHandler}
+    />
 
-      <UpdateSpaceModal
-        show={show}
-        handleClose={handleClose}
-        edit={true}
-        id={id}
-      />
-      {/* <Encabezado /> */}
-      <Row className="mainContainer">
-        <Col className="leftColumn">
-          <h5>
-            Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
-          </h5>
-          <h6>Miembros</h6>
-          <MemberList miembros={miembros} />
-          <h6>
-            Tableros{" "}
-            <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
-          </h6>
-          <BoardList tableros={tableros} />
-        </Col>
+    <UpdateSpaceModal
+      show={show}
+      handleClose={handleClose}
+      edit={true}
+      id={id}
+    />
+    {/* <Encabezado /> */}
+    <Row className="mainContainer">
+      <Col className="leftColumn">
+        <h5>
+          Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
+        </h5>
+        <h6>Miembros</h6>
+        <MemberList miembros={miembros} />
+        <h6>
+          Tableros{" "}
+          <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
+        </h6>
+        <BoardList tableros={boards} />
+      </Col>
 
-        <Col className="rightColumn" sm={9}>
-          <span>{boardActive.nombre}</span>
-          <Kanban />
-        </Col>
-      </Row>
-    </Container>
-  );
+      <Col className="rightColumn" sm={9}>
+        <span>{boardActive.nombre}</span>
+        <Kanban />
+      </Col>
+    </Row>
+  </Container>
+);
 };

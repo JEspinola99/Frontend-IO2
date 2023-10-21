@@ -8,7 +8,7 @@ export interface IBoard {
 export interface ISpaceData {
     nombre: string
     miembros: []
-    tableros: []
+    boards: []
     opciones: []
     boardActive: IBoard
 }
@@ -16,7 +16,7 @@ export interface ISpaceData {
 export interface ISpace {
     nombre:string
     miembros: string[]
-    tableros: IBoard[]
+    boards: IBoard[]
     opciones: string[]
     setNewBoard: (tablero:IBoard[]) => void;
     boardActive: IBoard;
@@ -37,7 +37,7 @@ interface ISpaceValues {
 export const useSpaceStore = create<ISpace>((set) => ({
     nombre: '',
     miembros: [],
-    tableros: [],
+    boards: [],
     opciones: [],
     boardActive: {id: 0, nombre: ''},
     setNewBoard: (tableros) => set((state) => ({...state, tableros})),
