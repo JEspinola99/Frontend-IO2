@@ -2,7 +2,7 @@ import { createBoard } from '@/services/spaceService';
 import { useSpaceStore } from "@/store/space"
 import { useState } from 'react';
 
-export const useSpaceComponent = (id: number) => {
+export const useSpaceComponent = (id: string) => {
   
   const [showBoardModal, setShowBoardModal] = useState(false)
   const handleOpenBoardModal = () => setShowBoardModal(() => true)

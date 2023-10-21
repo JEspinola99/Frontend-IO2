@@ -1,11 +1,11 @@
 import { DndContext, DragEndEvent, DragMoveEvent, DragStartEvent, KeyboardSensor, PointerSensor, UniqueIdentifier, closestCorners, useSensor, useSensors } from "@dnd-kit/core"
 import { SortableContext, arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useState } from "react";
-// import { Container } from "./Container";
+import { useContext, useState } from "react";
 import { Items } from "./Items";
-import { uuid } from "uuidv4";
 import { Col, Container, Row } from "react-bootstrap";
 import { ContainerColumn } from "./Container";
+import { SpaceContext } from "@/context/SpaceContext";
+import { useStore } from "zustand";
 
 type DNDType = {
     id: UniqueIdentifier;
@@ -18,68 +18,11 @@ type DNDType = {
 
 export const Kanban = () => {
 
-    const [containers, setContainers] = useState<DNDType[]>([
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 1',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 1'
-                }
-            ]
-        },
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 2',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 2'
-                }
-            ]
-        },
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 3',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 3'
-                }
-            ]
-        },
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 4',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 4'
-                }
-            ]
-        },
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 5',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 5'
-                }
-            ]
-        },
-        {
-            id: `container-${uuid()}`,
-            title: 'Container 6',
-            items: [
-                {
-                    id: `item-${uuid()}`,
-                    title: 'Item 6'
-                }
-            ]
-        }
-    ])
+    const store = useContext(SpaceContext)
+    const boardActive = useStore(store, (s) => s.boardActive)
+    const columns = boardActive?.Columna?.map((item) => ({id: item.id, title: item.nombre, items: []}))
+
+    const [containers, setContainers] = useState<DNDType[]>(columns)
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
     const [currentContainerId, setCurrentContainerId] = useState<UniqueIdentifier>()
     const [containerName, setContainerName] = useState('');
@@ -321,10 +264,10 @@ export const Kanban = () => {
                 onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
             >
-                <SortableContext items={containers.map((container) => container.id)}>
+                <SortableContext items={containers?.map((container) => container.id)}>
                     <Row className="border">
                         {
-                            containers.map((container) => (
+                            containers?.map((container) => (
                                 <Col sm={2} onClick={() => deleteColumn(container)}>
                                     <ContainerColumn
                                         title={container.title}
@@ -336,10 +279,10 @@ export const Kanban = () => {
                                         }}
                                     >
                                         <SortableContext
-                                            items={container.items.map((i) => i.id)}
+                                            items={container?.items?.map((i) => i.id)}
                                         >
                                             <div className="flex items-start flex-col gap-y-4">
-                                                {container.items.map((item) => (
+                                                {container?.items?.map((item) => (
                                                     <Items key={item.id} id={item.id} title={item.title} />
                                                 ))}
                                             </div>

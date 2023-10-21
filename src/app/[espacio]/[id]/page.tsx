@@ -4,11 +4,14 @@ import Encabezado from "../../head/page";
 import { Main } from "@/app/components/espacio/Main";
 import { getAllUsers } from "@/services/userService";
 import { getSpaceUsers } from "@/services/spaceUserService";
+import { MainWrapper } from '@/app/components/espacio/board/MainWrapper';
+import { ISpace, ISpaceValues } from '@/store/space';
 
 export default async function Page({ params }: any) {
   const id = params.id
 
   const { data } = await getSpace(id)
+
 
   const firstBoard = data?.tablero[0]
 
@@ -23,14 +26,22 @@ export default async function Page({ params }: any) {
   const usersInSpace = await getSpaceUsers(id)
 
 
+  const nombre = data?.nombre;
+  const miembros = usersInSpace?.data?.usuarios;
+  const boards = data?.tablero;
+  const opciones = usersResponse?.data 
+
+
+  const spaceData: ISpaceValues = {
+    nombre,
+    miembros,
+    boards,
+    opciones,
+    boardActive: firstBoardData,
+    id
+  }
+
   return (
-    <Main
-      data={data}
-      id={id}
-      users={users}
-      usersInSpace={usersInSpace?.data.usuarios}
-      boardsDefault={data?.tablero}
-      firstBoardData={firstBoardData}
-    />
+    <MainWrapper {...spaceData} />
   )
 }

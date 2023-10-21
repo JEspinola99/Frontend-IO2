@@ -1,7 +1,7 @@
 "use client"
 import Encabezado from "@/app/head/page"
 import { Button, Container, Row, Col } from "react-bootstrap"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { createBoard, createSpace, getBoard, getSpace, updateSpace } from "@/services/spaceService"
 import { getSpaceUsers } from "@/services/spaceUserService"
 import { CreateBoardModal } from "./CreateBoardModal"
@@ -12,8 +12,10 @@ import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
 import { Kanban } from "../Kanban/Kanban"
+import { SpaceContext } from "@/context/SpaceContext"
+import { useStore } from "zustand"
 
-interface IMain {
+export interface IMain {
   data: any;
   id: number;
   usersInSpace: any;
@@ -22,10 +24,10 @@ interface IMain {
   firstBoardData: IBoard;
 }
 
-export const Main = ({ data, id, users, usersInSpace, boardsDefault, firstBoardData }: IMain) => {
-  const { setSpaceData, nombre, miembros, boards, boardActive } =
-    useSpaceStore();
-
+export const Main = () => {
+  const store = useContext(SpaceContext)
+  const { id, nombre, boardActive } = useStore(store, (s) => s)
+  console.log(boardActive)
   const {
     createBoardHandler,
     handleClose,
@@ -36,58 +38,48 @@ export const Main = ({ data, id, users, usersInSpace, boardsDefault, firstBoardD
     handleOpen,
   } = useSpaceComponent(id);
 
-  useEffect(() => {
-    setSpaceData({
-      nombre: data.nombre,
-      miembros: usersInSpace,
-      opciones: users,
-      boards: boardsDefault,
-      boardActive: firstBoardData
-    });
-  }, []);
-
 
   useEffect(() => {
     (async () => {
       const { data } = await getBoard(boardActive.id)
     })()
-}, [boardActive])
+  }, [boardActive])
 
-return (
-  <Container fluid>
-    <Toaster position="top-right" />
-    <CreateBoardModal
-      show={showBoardModal}
-      handleClose={handleCloseBoardModal}
-      createBoard={createBoardHandler}
-    />
+  return (
+    <Container fluid>
+      <Toaster position="top-right" />
+      <CreateBoardModal
+        show={showBoardModal}
+        handleClose={handleCloseBoardModal}
+        createBoard={createBoardHandler}
+      />
 
-    <UpdateSpaceModal
-      show={show}
-      handleClose={handleClose}
-      edit={true}
-      id={id}
-    />
-    {/* <Encabezado /> */}
-    <Row className="mainContainer">
-      <Col className="leftColumn">
-        <h5>
-          Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
-        </h5>
-        <h6>Miembros</h6>
-        <MemberList miembros={miembros} />
-        <h6>
-          Tableros{" "}
-          <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
-        </h6>
-        <BoardList tableros={boards} />
-      </Col>
+      <UpdateSpaceModal
+        show={show}
+        handleClose={handleClose}
+        edit={true}
+        id={id}
+      /> 
+      {/* <Encabezado /> */}
+      <Row className="mainContainer">
+        <Col className="leftColumn">
+          <h5>
+            Espacio: {nombre} <Button onClick={handleOpen}>Editar</Button>
+          </h5>
+          <h6>Miembros</h6>
+          <MemberList />
+          <h6>
+            Tableros{" "}
+            <Button onClick={handleOpenBoardModal}>Crear Tablero</Button>
+          </h6>
+          <BoardList />
+        </Col>
 
-      <Col className="rightColumn" sm={9}>
-        <span>{boardActive.nombre}</span>
-        <Kanban />
-      </Col>
-    </Row>
-  </Container>
-);
+        <Col className="rightColumn" sm={9}>
+          <span>{boardActive.nombre}</span>
+          <Kanban />
+        </Col>
+      </Row>
+    </Container>
+  );
 };
