@@ -1,37 +1,32 @@
-import { SpaceContext } from "@/context/SpaceContext";
-import { getBoard } from "@/services/spaceService";
-import { IBoard, useSpaceStore } from "@/store/space"
-import { useContext, useState } from "react";
-import { useStore } from "zustand"
+import { IBoard, useSpaceStore } from "@/store/space";
+import { useState } from "react";
 
 interface IBoarList {
-    tableros: IBoard[];
+  tableros: IBoard[];
 }
-export const BoardList = () => {
+export const BoardList = ({ tableros }: IBoarList) => {
+  const [active, setActive] = useState(0);
 
-    const [active, setActive] = useState(0)
+  const { setBoardActive } = useSpaceStore();
 
-    const store = useContext(SpaceContext)
+  const handleActive = (i: number) => {
+    setActive(() => i);
+    const boardActive = tableros.filter((tablero, index) => index == i);
+    setBoardActive({ nombre: boardActive[0].nombre, id: boardActive[0].id });
+  };
 
-    const { setBoardActive, boards, setLoadingKanban } = useStore(store, (s) => s)
-
-    const handleActive = async(i: number) => {
-        setActive(() => i)
-        const boardActive = boards.filter((board, index)=> index == i)[0]
-        setLoadingKanban(true)
-        const { data  } = await getBoard(boardActive.id)
-        setLoadingKanban(false)
-        setBoardActive(data)
-    }
-
-    return (
-        <>
-            {
-                boards?.map((item: any, index) => (
-                    <div role="button" className={`boardItem ${index == active? 'active': ''}`} 
-                    onClick={() => handleActive(index)} key={item.id}>{item.nombre}</div>
-                ))
-            }
-        </>
-    )
-}
+  return (
+    <>
+      {tableros?.map((item: any, index) => (
+        <div
+          role="button"
+          className={`boardItem ${index == active ? "active" : ""}`}
+          onClick={() => handleActive(index)}
+          key={item.id}
+        >
+          {item.nombre}
+        </div>
+      ))}
+    </>
+  );
+};

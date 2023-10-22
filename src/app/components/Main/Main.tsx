@@ -7,12 +7,12 @@ export default function MainPage({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Encabezado />
-      <div className="flex flex-col items-center justify-between">
+      <div className="h-full flex flex-col items-center justify-between">
         <div className="relative w-full">
           {/* <div className="absolute -z-10 w-full">
             <Image src={bgImage} alt="bgImage" className="w-full" />
           </div> */}
-          <div className="flex flex-row justify-start p-0 py-2 left-40 h-ful">
+          <div className="h-screen flex flex-row justify-start p-0 py-2 left-40 ">
             <SideBar />
             {children}
           </div>
