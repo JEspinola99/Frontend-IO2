@@ -8,18 +8,19 @@ import { DeleteColumnModal } from "./DeleteColumnModal";
 import { deleteColumn, updateColumn } from "@/services/columnService";
 import { SpaceContext } from "@/context/SpaceContext";
 import { useStore } from "zustand";
+import { CreateTaskModal } from "./CreateTaskModal";
 
 export const ContainerColumn = ({
     id,
     children,
     title,
     onAddItem
-}) => {
+}:any) => {
 
     const [titleValue, setTitleValue] = useState(title)
 
     const store = useContext(SpaceContext)
-    const { setNewColumn, boardActive } = useStore(store, (e) => e)
+    const { setNewColumn, boardActive, boards } = useStore(store, (e) => e)
 
     const {
         attributes,
@@ -50,13 +51,23 @@ export const ContainerColumn = ({
         const res = await updateColumn(titleValue, id)
     }
 
+    const [showTask, setShowTask] = useState(false)
+    const handleOpenTask = () => setShowTask(() => true)
+    const handleCloseTask = () => setShowTask(() => false)
+
     return (
         <>
-            <DeleteColumnModal
+            {/* <DeleteColumnModal
                 show={show}
                 handleClose={handleClose}
                 deleteColumn={handleDeleteColumn}
             />
+
+            <CreateTaskModal
+                show={showTask}
+                handleClose={handleCloseTask}
+                columnId={id}
+             /> */}
 
             <div
                 {...attributes}
@@ -88,7 +99,7 @@ export const ContainerColumn = ({
                     </div>
                 </div>
                 {children}
-                <Button variant='secondary' size="sm" onClick={onAddItem}>Agregar Tarea</Button>
+                <Button variant='secondary' size="sm" onClick={handleOpenTask}>Agregar Tarea</Button>
             </div>
         </>
     )

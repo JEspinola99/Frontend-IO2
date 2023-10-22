@@ -8,21 +8,19 @@ import { SpaceContext } from "@/context/SpaceContext";
 import { useStore } from "zustand";
 import FidgetSpinner from "react-loader-spinner";
 import { Loader } from "../Loader";
+import { ITask } from "@/store/space";
 
 type DNDType = {
     id: UniqueIdentifier;
     title: string
-    items: {
-        id: UniqueIdentifier
-        title: string
-    }[]
+    items: ITask[]
 }
 
 export const Kanban = () => {
 
     const store = useContext(SpaceContext)
     const { boardActive, loadingKanban } = useStore(store, (s) => s)
-    const columns = boardActive?.columnas?.map((item) => ({ id: item.id, title: item.nombre, items: [] }))
+    const columns = boardActive?.columnas?.map((item) => ({ id: item.id, title: item.nombre, items: item.tareas }))
 
     const [containers, setContainers] = useState<DNDType[]>(columns)
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -258,7 +256,7 @@ export const Kanban = () => {
     }, [boardActive])
 
     return (
-        <Container fluid className="border">
+        <>
             {
                 loadingKanban ? <Loader /> :
                     <DndContext
@@ -270,10 +268,10 @@ export const Kanban = () => {
                         id='list'
                     >
                         <SortableContext items={containers?.map((container) => container.id)}>
-                            <Row className="border">
+                            {/* <Row className="border"> */}
                                 {
                                     containers?.map((container) => (
-                                        <Col sm={2} className="p-1" key={container.id}>
+                                        // <Col sm={2} className="p-1" key={container.id}>
                                             <ContainerColumn
                                                 title={container.title}
                                                 key={container.id}
@@ -286,20 +284,20 @@ export const Kanban = () => {
                                                 <SortableContext
                                                     items={container?.items?.map((i) => i.id)}
                                                 >
-                                                    <div className="flex items-start flex-col gap-y-4">
+                                                    {/* <div className="flex items-start flex-col gap-4 border"> */}
                                                         {container?.items?.map((item) => (
-                                                            <Items key={item.id} id={item.id} title={item.title} />
+                                                            <Items key={item.id} id={item.id} title={item.titulo} />
                                                         ))}
-                                                    </div>
+                                                    {/* </div> */}
                                                 </SortableContext>
                                             </ContainerColumn>
-                                        </Col>
+                                        // </Col>
                                     ))
                                 }
-                            </Row>
+                            {/* </Row> */}
                         </SortableContext>
                     </DndContext>
             }
-        </Container>
+        </>
     )
 }

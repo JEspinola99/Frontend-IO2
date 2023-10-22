@@ -1,3 +1,4 @@
+import { Id } from './../app/types';
 import { createStore } from 'zustand';
 
 export interface IBoard {
@@ -6,15 +7,30 @@ export interface IBoard {
     columnas: IColumn[]
 } 
 
+export interface ITask {
+    id: number
+    titulo: string
+    descripcion: string
+    fechaVencimiento: string
+    usuarioId: number
+    etiquetaId: number
+}
+
+export interface IMiembro {
+    id: number
+    email: string
+}
+
 export interface IColumn {
     id: number
     nombre: string
     tableroId: number
+    tareas: ITask[]
 }
 
 export interface ISpaceData {
     nombre: string
-    miembros: []
+    miembros: IMiembro[]
     boards: []
     opciones: []
     boardActive: IBoard
@@ -23,7 +39,7 @@ export interface ISpaceData {
 
 export interface ISpace {
     nombre:string
-    miembros: string[]
+    miembros: IMiembro[]
     boards: IBoard[]
     opciones: string[]
     setNewBoard: (tablero:IBoard[]) => void;
@@ -40,7 +56,7 @@ export interface ISpace {
 
 export interface ISpaceValues {
     nombre: string
-    miembros: string[]
+    miembros: IMiembro[]
     boards: IBoard[]
     opciones: string[]
     boardActive: IBoard

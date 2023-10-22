@@ -14,12 +14,13 @@ export default async function Page({ params }: any) {
 
   const firstBoard = data?.tablero[0]
 
-  const firstBoardData = {
+
+  const firstBoardData = firstBoard && {
     id: firstBoard.id,
     espacioDeTrabajoId: firstBoard.espacioDeTrabajoId,
     columnas: firstBoard.columnas,
     nombre: firstBoard.nombre
-  }
+  } 
 
   const usersResponse = await getAllUsers();
 
