@@ -73,11 +73,11 @@ export const ContainerColumn = ({
                 deleteColumn={handleDeleteColumn}
             />
 
-            {/* <CreateTaskModal
+            <CreateTaskModal
                 show={showTask}
                 handleClose={handleCloseTask}
                 columnId={id}
-             />  */}
+             /> 
 
             <div
                 // {...attributes}

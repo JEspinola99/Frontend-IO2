@@ -1,3 +1,4 @@
+import { UniqueIdentifier } from '@dnd-kit/core';
 import { Id } from './../app/types';
 import { createStore } from 'zustand';
 
@@ -8,13 +9,14 @@ export interface IBoard {
 } 
 
 export interface ITask {
-    id: number
+    id?: number | UniqueIdentifier
     titulo: string
     descripcion: string
     fechaVencimiento: string
-    usuarioId: number
-    etiquetaId: number
+    usuarioId: number | null
+    etiquetaId: number | null
     nombre?: string
+    columnaId?: number
 }
 
 export interface IMiembro {

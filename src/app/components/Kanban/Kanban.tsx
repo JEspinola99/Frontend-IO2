@@ -80,7 +80,7 @@ export const Kanban = () => {
                                         >
                                             <div className="flex items-start flex-col gap-4 border">
                                                 {container?.tareas?.map((item, index) => (
-                                                    <Items parent={container.id} key={item.id} id={item.id} index={item.id} title={item.titulo} />
+                                                    <Items parent={container.id} key={item.id} id={item.id as UniqueIdentifier} index={item.id as number} title={item.titulo} />
                                                 ))}
                                             </div>
                                         </ContainerColumn>

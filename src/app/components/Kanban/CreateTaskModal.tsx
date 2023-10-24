@@ -1,7 +1,7 @@
 import { SpaceContext } from "@/context/SpaceContext"
-import { ITask } from "@/interfaces/task"
 import { deleteColumn } from "@/services/columnService"
 import { create } from "@/services/taskService"
+import { ITask } from "@/store/space"
 import { useContext } from "react"
 import { Button, Col, FormControl, FormSelect, Modal, Row, Form } from "react-bootstrap"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
@@ -32,16 +32,25 @@ export const CreateTaskModal = ({
         }
     })
 
-    console.log(methods.formState.errors)
+    const store = useContext(SpaceContext)
+    const { boardActive, setBoardActive, miembros  } = useStore(store, (s) => s)
 
-    const createTask:SubmitHandler<ITask>  = async (data) => {
-        console.log(data)
-        await create(data)
+    const createTask:SubmitHandler<ITask>  = async (fetchData) => {
+        const {data} =  await create(fetchData)
+        const newTask = data
+        const newTasks = boardActive.columnas.find((col) => col.id == columnId)?.tareas.concat(newTask)
+        const newColumns = boardActive.columnas.map((col) => {
+             if(col.id == columnId){
+                 return {...col, tareas: newTasks as ITask[]}
+             }else{
+                 return {...col}
+             }
+        })
+        const updatedBoard = {...boardActive, columnas: newColumns }
+        setBoardActive(updatedBoard)
         handleClose()
     }
 
-    const store = useContext(SpaceContext)
-    const usuarios = useStore(store, (s) => s.miembros)
 
     const handleChange = (e: any) => {
         const target = e.target
@@ -93,7 +102,7 @@ export const CreateTaskModal = ({
                                     <FormSelect {...methods.register('usuarioId', { required: true })}>
                                         <option value={0}>NO DEFINIDO</option>
                                         {
-                                            usuarios?.map((item) => (
+                                            miembros?.map((item) => (
                                                 <option value={item.id} key={item.id} >{item.email}</option>
                                             ))
                                         }
