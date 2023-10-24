@@ -5,3 +5,8 @@ export const create = (data:ITask):Promise<{data:ITask}> => {
     const url = `tasks`
     return apiClient.post(url, data)
 }
+
+export const deleteTask = (data: any) => {
+    const url = `tasks`
+    return apiClient.put(url, data)
+}

@@ -10,6 +10,8 @@ import { useStore } from "zustand";
 import FidgetSpinner from "react-loader-spinner";
 import { Loader } from "../Loader";
 import { IBoard, IColumn, ITask } from "@/store/space";
+import { IUpdateColumns, updateColums } from "@/services/columnService";
+import { create, deleteTask } from "@/services/taskService";
 
 type DNDType = {
     id: UniqueIdentifier;
@@ -31,8 +33,10 @@ export const Kanban = () => {
         useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
     )
 
-    const handleDragEnd = (event: DragEndEvent) => {
+    const handleDragEnd = async(event: DragEndEvent) => {
         const { active, over } = event;
+        const columnId1 = active?.data?.current?.parent
+        const columnId2 = over?.id as number
         const activeCol = boardActive.columnas.find((col) => col.id == active?.data?.current?.parent)
         const activeColIndex = boardActive.columnas.findIndex((col) => col.id == active?.data?.current?.parent)
         const overColIndex = boardActive.columnas.findIndex((col) => col.id == over?.id)
@@ -51,6 +55,16 @@ export const Kanban = () => {
                 return { ...col };
             }
         })
+
+        const tasksColumn2 = boardActive.columnas.find((col, index) => index == overColIndex)?.tareas as ITask[]
+        const fetchData:IUpdateColumns = {
+            columnId1,
+            columnId2,
+            tasksColumn1: updatedItems.map((task) => ({...task, columnaId: columnId1})),
+            tasksColumn2: tasksColumn2.concat(removedItem).map((task) => ({...task, columnaId: columnId2}))
+        } 
+        await deleteTask({id: removedItem[0].id, columnaId: columnId1})
+        await create({...removedItem[0], columnaId: columnId2})
         const updatedBoardActive: IBoard = { ...boardActive, columnas: newContainers }
         setBoardActive(updatedBoardActive)
     }
