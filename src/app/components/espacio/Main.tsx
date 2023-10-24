@@ -9,10 +9,10 @@ import { Toaster } from "react-hot-toast"
 import { BoardList } from "./BoardsList"
 import { MemberList } from "./MemberList"
 import { useSpaceComponent } from "@/hooks/useSpaceComponent"
-import { Kanban } from "../Kanban/Kanban"
 import { SpaceContext } from "@/context/SpaceContext"
 import { useStore } from "zustand"
 import { CreateColumnModal } from "./CreateColumnModal"
+import { Kanban } from "../Kanban/Kanban"
 
 export interface IMain {
   data: any;

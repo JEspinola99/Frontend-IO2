@@ -25,6 +25,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "jose": "^4.14.6",
+    "lodash": "^4.17.21",
     "next": "^13.5.4",
     "react": "18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/lodash": "^4.14.200",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "postcss-nesting": "^12.0.1",

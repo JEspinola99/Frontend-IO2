@@ -14,6 +14,7 @@ export interface ITask {
     fechaVencimiento: string
     usuarioId: number
     etiquetaId: number
+    nombre?: string
 }
 
 export interface IMiembro {
