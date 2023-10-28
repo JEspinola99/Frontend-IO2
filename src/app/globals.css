@@ -236,6 +236,10 @@ body {
   cursor: grab;
 }
 
+.icon-grab.active{
+  cursor: grabbing;
+}
+
 
 .itemBoard {
   border: 5px blue solid;
@@ -244,10 +248,14 @@ body {
 }
 
 .containerBoard {
-  border: 1px orange solid;
+  border: 2px black solid;
   max-height: 90vh;
   cursor: default !important;
 }
 .userActive {
-  background-color: red;
+  background-color:  gray !important;
+}
+
+.maxTasks {
+  border: 2px red solid;
 }

@@ -13,6 +13,7 @@ import { IBoard, IColumn, ITask } from "@/store/space";
 import { IUpdateColumns, updateColums } from "@/services/columnService";
 import { create, deleteTask, getTask } from "@/services/taskService";
 import { UpdateTaskModal } from "./UpdateTaskModal";
+import toast, { Toaster } from "react-hot-toast";
 
 type DNDType = {
     id: UniqueIdentifier;
@@ -31,9 +32,9 @@ export const Kanban = () => {
     const [showTask, setShowTask] = useState(false)
     const handleCloseTask = () => setShowTask(() => false)
     const [taskData, setTaskData] = useState<ITask>({} as ITask);
-    const handleOpenTask = async(id:string) => {
-        const {data} = await getTask(id)
-        const task:ITask = {
+    const handleOpenTask = async (id: string) => {
+        const { data } = await getTask(id)
+        const task: ITask = {
             titulo: data.titulo,
             descripcion: data.descripcion,
             fechaVencimiento: data.fechaVencimiento.split('T')[0],
@@ -42,7 +43,7 @@ export const Kanban = () => {
         }
         setShowTask(() => true)
         setTaskData(task)
-    } 
+    }
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -60,25 +61,30 @@ export const Kanban = () => {
 
         const updatedItems = activeCol?.tareas.filter((item) => item.id != active?.data?.current?.id) as ITask[]
         const removedItem = activeCol?.tareas.filter((item) => item.id == active?.data?.current?.id) as ITask[]
-        const {data} = await create({ ...removedItem[0], columnaId: columnId2 })
-        
+        try{
+            const { data } = await create({ ...removedItem[0], columnaId: columnId2 })
+            const newContainers: IColumn[] = boardActive.columnas.map((col, index) => {
+                if (index == activeColIndex) {
+                    const column: IColumn = { ...col, tareas: updatedItems }
+                    return column;
+                } else if (index == overColIndex) {
+                    const overItems = col.tareas
+                    return { ...col, tareas: overItems?.concat(data) }
+                } else {
+                    return { ...col };
+                }
+            })
+    
+            await deleteTask({ id: removedItem[0].id, columnaId: columnId1 })
+            const updatedBoardActive: IBoard = { ...boardActive, columnas: newContainers }
+            setBoardActive(updatedBoardActive)
+        }catch(error: any){
+            const message = error?.response?.data?.message;
+            toast.error(message)
+        }
 
 
-        const newContainers: IColumn[] = boardActive.columnas.map((col, index) => {
-            if (index == activeColIndex) {
-                const column: IColumn = { ...col, tareas: updatedItems }
-                return column;
-            } else if (index == overColIndex) {
-                const overItems = col.tareas
-                return { ...col, tareas: overItems?.concat(data) }
-            } else {
-                return { ...col };
-            }
-        })
 
-        await deleteTask({ id: removedItem[0].id, columnaId: columnId1 })
-        const updatedBoardActive: IBoard = { ...boardActive, columnas: newContainers }
-        setBoardActive(updatedBoardActive)
     }
 
     return (
@@ -90,7 +96,7 @@ export const Kanban = () => {
                             show={showTask}
                             handleClose={handleCloseTask}
                             taskData={taskData}
-                             />
+                        />
                         <DndContext
                             sensors={sensors}
                             collisionDetection={closestCorners}
@@ -109,6 +115,8 @@ export const Kanban = () => {
                                                     setShowAddItemModal(true)
                                                     setCurrentContainerId(container.id)
                                                 }}
+                                                tasks={container?.tareas.length}
+                                                maxTareas={container?.maxTareas}
                                             >
                                                 <div className="flex items-start flex-col gap-1 border">
                                                     {container?.tareas?.map((item, index) => (
@@ -119,6 +127,7 @@ export const Kanban = () => {
                                                             index={item.id as number}
                                                             title={item.titulo}
                                                             handleOpenTask={handleOpenTask}
+                                                            fechaVencimiento={new Date(item.fechaVencimiento.split('T')[0]).getTime()}
                                                         />
                                                     ))}
                                                 </div>

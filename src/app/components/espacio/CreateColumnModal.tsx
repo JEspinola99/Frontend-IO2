@@ -3,6 +3,7 @@ import { ICreateColumn, createColumn } from "@/services/columnService"
 import { useContext } from "react"
 import { Button, Col, FormControl, Modal, Row } from "react-bootstrap"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { useStore } from "zustand"
 
 
@@ -18,23 +19,33 @@ export const CreateColumnModal = ({
 
     const methods = useForm({
         reValidateMode: 'onChange',
-        defaultValues: {nombre: '', tableroId: null}
-        
+        defaultValues: { nombre: '', tableroId: null, maxTareas: 0 }
+
     })
 
     const store = useContext(SpaceContext)
     const { boardActive, setNewColumn } = useStore(store, (s) => s)
 
-    const submitHandler = async({nombre}:any) => {
-        const fetchData:ICreateColumn = {
+    const submitHandler = async ({ nombre, maxTareas }: any) => {
+        const fetchData: ICreateColumn = {
             nombre,
+            maxTareas: Number(maxTareas),
             tableroId: boardActive.id
         }
-        const { data } = await createColumn(fetchData)
-        const newColumns = boardActive.columnas.concat({id: data.id, nombre: data.nombre, tableroId: boardActive.id})
-        console.log(newColumns)
-        setNewColumn(newColumns)
-        handleClose()
+        try {
+            const { data } = await createColumn(fetchData)
+            const newColumns = boardActive.columnas.concat({
+                id: data.id, nombre: data.nombre,
+                tableroId: boardActive.id, tareas: [], maxTareas: fetchData.maxTareas
+            })
+            setNewColumn(newColumns)
+        } catch (error: any) {
+            const message = error?.response?.data?.message;
+            toast.error(message)
+        } finally {
+            methods.reset()
+            handleClose()
+        }
     }
 
     return (
@@ -53,10 +64,17 @@ export const CreateColumnModal = ({
                         <Col>
                             <FormControl {...methods.register("nombre", { required: "Nombre es obligatorio" })} />
                         </Col>
+                        <Col>
+                            <FormControl type="number" {...methods.register("maxTareas",
+                                { required: "Cantidad de Tareas maxima" })} />
+                        </Col>
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={() => {
+                        handleClose()
+                        methods.reset()
+                    }}>
                         Cancelar
                     </Button>
                     <Button variant="primary" onClick={methods.handleSubmit(submitHandler)}>Crear</Button>

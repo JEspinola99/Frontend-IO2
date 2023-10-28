@@ -5,6 +5,7 @@ import { ITask } from "@/store/space"
 import { useContext } from "react"
 import { Button, Col, FormControl, FormSelect, Modal, Row, Form } from "react-bootstrap"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { useStore } from "zustand"
 
 
@@ -33,23 +34,29 @@ export const CreateTaskModal = ({
     })
 
     const store = useContext(SpaceContext)
-    const { boardActive, setBoardActive, miembros, etiquetas } = useStore(store, (s) => s)
+    const { miembros, etiquetas, boardActive, setBoardActive } = useStore(store, (s) => s)
 
     const createTask: SubmitHandler<ITask> = async (fetchData) => {
-        const { data } = await create({ ...fetchData, usuarioId: Number(fetchData.usuarioId), etiquetaId: Number(fetchData.etiquetaId) })
-        const newTask = data
-        const newTasks = boardActive.columnas.find((col) => col.id == columnId)?.tareas.concat(newTask)
-        const newColumns = boardActive.columnas.map((col) => {
-            if (col.id == columnId) {
-                return { ...col, tareas: newTasks as ITask[] }
-            } else {
-                return { ...col }
-            }
-        })
-        const updatedBoard = { ...boardActive, columnas: newColumns }
-        setBoardActive(updatedBoard)
-        handleClose()
-        methods.reset()
+        try {
+            const { data } = await create({ ...fetchData, usuarioId: Number(fetchData.usuarioId), etiquetaId: Number(fetchData.etiquetaId) })
+            const newTask = data
+            const newTasks = boardActive.columnas.find((col) => col.id == columnId)?.tareas.concat(newTask)
+            const newColumns = boardActive.columnas.map((col) => {
+                if (col.id == columnId) {
+                    return { ...col, tareas: newTasks as ITask[] }
+                } else {
+                    return { ...col }
+                }
+            })
+            const updatedBoard = { ...boardActive, columnas: newColumns }
+            setBoardActive(updatedBoard)
+        } catch (error: any) {
+            const message = error?.response?.data?.message;
+            toast.error(message)
+        } finally {
+            handleClose()
+            methods.reset()
+        }
     }
 
 

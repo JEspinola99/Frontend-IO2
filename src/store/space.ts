@@ -36,6 +36,7 @@ export interface IColumn {
     nombre: string
     tableroId: number
     tareas: ITask[]
+    maxTareas: number
 }
 
 export interface ISpaceData {

@@ -21,11 +21,6 @@ export const UpdateColumnModal = ({
     const store = useContext(SpaceContext)
     const { boardActive, setNewColumn } = useStore(store, (s) => s)
 
-    const methods = useForm({
-        reValidateMode: 'onChange',
-        defaultValues: {nombre: }
-    })
-
 
     return (
         <Modal

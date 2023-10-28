@@ -4,7 +4,6 @@ import { CSS } from "@dnd-kit/utilities"
 import clsx from 'clsx';
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, FormControl, Row } from "react-bootstrap";
-import { BiTrash } from "react-icons/bi"
 import { DeleteColumnModal } from "./DeleteColumnModal";
 import { deleteColumn, updateColumn } from "@/services/columnService";
 import { SpaceContext } from "@/context/SpaceContext";
@@ -17,7 +16,9 @@ export const ContainerColumn = ({
     id,
     children,
     title,
-    onAddItem
+    onAddItem,
+    tasks,
+    maxTareas
 }:any) => {
 
     const [titleValue, setTitleValue] = useState(title)
@@ -87,7 +88,7 @@ export const ContainerColumn = ({
                     // transform: CSS.Translate.toString(transform)
                 }}
                 className={clsx(
-                    ' bg-gray-50 containerBoard',
+                    ` bg-gray-50 containerBoard ${tasks  >=  maxTareas  ? 'maxTasks': ''}`,
                     // isDragging && 'opacity-50'
                 )}
             >

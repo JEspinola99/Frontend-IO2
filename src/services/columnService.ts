@@ -4,6 +4,7 @@ import { ITask } from "@/store/space";
 export interface ICreateColumn {
     nombre: string;
     tableroId: number
+    maxTareas: number
 }
 
 export interface IUpdateColumns {

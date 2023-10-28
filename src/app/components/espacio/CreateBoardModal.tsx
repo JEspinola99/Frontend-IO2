@@ -20,14 +20,13 @@ export const CreateBoardModal = ({ show, handleClose, createBoard }: any) => {
     const onSubmit = async(fetchData: any) => {
         try{
             const { data  } = await createBoard(fetchData)
-            const newBoard:IBoard = {nombre: data.nombre, id: data.id}
+            const newBoard:IBoard = {nombre: data.nombre, id: data.id, columnas: []}
             const newBoards = boards.concat(newBoard)
             setNewBoard(newBoards)
             handleClose()
             methods.reset()
         } catch(error: any) {
-            const message = error?.response?.data;
-            console.log(message)
+            const message = error?.response?.data?.message;
             toast.error(message)
         } finally {
             handleClose()

@@ -12,10 +12,11 @@ type ITemsType = {
     index: number
     parent: UniqueIdentifier
     handleOpenTask: (id:string) => void
+    fechaVencimiento: number
 }
 
-export const Items = ({ id, title, index, parent, handleOpenTask }: ITemsType) => {
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+export const Items = ({ id, title, index, parent, handleOpenTask, fechaVencimiento }: ITemsType) => {
+    const { attributes, listeners, setNodeRef, transform, active } = useDraggable({
         id: id,
         data: {
             title,
@@ -25,7 +26,9 @@ export const Items = ({ id, title, index, parent, handleOpenTask }: ITemsType) =
         },
     });
 
-
+    const date = new Date().getTime()
+    const expiredDate = date >= fechaVencimiento;
+    const isDragging = active?.id == id
     return (
         <div
             ref={setNodeRef}
@@ -37,11 +40,11 @@ export const Items = ({ id, title, index, parent, handleOpenTask }: ITemsType) =
                 ' bg-white shadow-md rounded-xl border border-transparent hover:border-white',
             )}
         >
-            <div className="d-flex border items-center">
+            <div className={`d-flex items-center ${expiredDate ? 'userActive': ''} `}>
                 <span className="border flex-grow-1 user-select-none" onClick={() =>handleOpenTask(id as string)} >
                     {title}
                 </span>
-                <span {...listeners} className="icon-grab">
+                <span {...listeners} className={`icon-grab ${isDragging ? 'active': ''}`}>
                     <RiDraggable size={25} />
                 </span>
             </div>
