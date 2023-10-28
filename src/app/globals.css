@@ -248,3 +248,6 @@ body {
   max-height: 90vh;
   cursor: default !important;
 }
+.userActive {
+  background-color: red;
+}

@@ -20,7 +20,7 @@ export const createBoard = (data:any) => {
     return apiClient.post(url, data)
 }
 
-export const getBoard = (id: number) => {
-  const url = `boards/${id}`
+export const getBoard = (id: number, usuarioId?: number) => {
+  const url = `boards/${id}?usuarioId=${usuarioId}`
   return apiClient.get(url)
 }
