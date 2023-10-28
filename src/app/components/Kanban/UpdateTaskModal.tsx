@@ -11,111 +11,83 @@ import { useStore } from "zustand"
 interface IUpdateTaskModal {
     show: boolean
     handleClose: () => void
+    taskData: ITask
 }
 
 export const UpdateTaskModal = ({
     show,
     handleClose,
+    taskData
 }: IUpdateTaskModal) => {
 
-    const methods = useForm<ITask>({
-        reValidateMode: 'onChange',
-        defaultValues: {
-            titulo: '',
-            descripcion: '',
-            usuarioId: null,
-            etiquetaId: null,
-            fechaVencimiento: ''
-        }
-    })
-
     const store = useContext(SpaceContext)
-    const { boardActive, setBoardActive, miembros  } = useStore(store, (s) => s)
-
-    const createTask:SubmitHandler<ITask>  = async (fetchData) => {
-        // const {data} =  await create(fetchData)
-        // const newTask = data
-        // const newTasks = boardActive.columnas.find((col) => col.id == columnId)?.tareas.concat(newTask)
-        // const newColumns = boardActive.columnas.map((col) => {
-        //      if(col.id == columnId){
-        //          return {...col, tareas: newTasks as ITask[]}
-        //      }else{
-        //          return {...col}
-        //      }
-        // })
-        // const updatedBoard = {...boardActive, columnas: newColumns }
-        // setBoardActive(updatedBoard)
-        // handleClose()
-    }
-
-
-    const handleChange = (e: any) => {
-        const target = e.target
-        const value = target.value == 0 ? null : target.value
-        methods.setValue('usuarioId', value)
-    }
+    const { miembros, etiquetas } = useStore(store, (s) => s)
 
 
 
 
     return (
-        <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(createTask)}>
-                <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Editar Tarea</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Row>
+        <Form >
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>{taskData?.titulo}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col>
+                            <Col>Etiqueta</Col>
                             <Col>
-                                <Col>Titulo</Col>
-                                <Col>
-                                    <FormControl {...methods.register('titulo', { required: true })} />
-                                </Col>
+                                <FormSelect defaultValue={taskData?.etiquetaId as number} disabled>
+                                    {
+                                        etiquetas?.map((etiqueta) => (
+                                            <option value={etiqueta.id} key={etiqueta.id}>{etiqueta.nombre}</option>
+                                        ))
+                                    }
+                                </FormSelect>
                             </Col>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Col>Descripcion</Col>
                             <Col>
-                                <Col>Descripcion</Col>
-                                <Col>
-                                    <FormControl {...methods.register('descripcion', { required: true })} />
-                                </Col>
+                                <FormControl value={taskData?.descripcion} disabled />
                             </Col>
-                        </Row>
+                        </Col>
+                    </Row>
 
-                        <Row>
+                    <Row>
+                        <Col>
+                            <Col>Fecha Vencimiento</Col>
                             <Col>
-                                <Col>Fecha Vencimiento</Col>
-                                <Col>
-                                    <FormControl type="date" {...methods.register('fechaVencimiento', { required: true })} />
-                                </Col>
+                                <FormControl type="date" value={taskData?.fechaVencimiento} disabled />
                             </Col>
+                        </Col>
+                        <Col>
+                            <Col>Usuario Asignado</Col>
                             <Col>
-                                <Col>Usuario Asignado</Col>
-                                <Col>
-                                    <FormSelect {...methods.register('usuarioId', { required: true })}>
-                                        <option value={0}>NO DEFINIDO</option>
-                                        {
-                                            miembros?.map((item) => (
-                                                <option value={item.id} key={item.id} >{item.email}</option>
-                                            ))
-                                        }
-                                    </FormSelect>
-                                </Col>
+                                <FormSelect defaultValue={taskData?.usuarioId as number} disabled>
+                                    {
+                                        miembros?.map((item) => (
+                                            <option value={item.id} key={item.id} >{item.email}</option>
+                                        ))
+                                    }
+                                </FormSelect>
                             </Col>
-                        </Row>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Cancelar
-                        </Button>
-                        <Button variant="primary" onClick={methods.handleSubmit(createTask)} type="submit">Crear Tarea</Button>
-                    </Modal.Footer>
-                </Modal>
-            </Form>
-        </FormProvider>
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </Form>
     )
 }

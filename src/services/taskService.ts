@@ -10,3 +10,8 @@ export const deleteTask = (data: any) => {
     const url = `tasks`
     return apiClient.put(url, data)
 }
+
+export const getTask = (id:string):Promise<{data:ITask}> => {
+    const url = `tasks/${id}`
+    return apiClient.get(url)
+}

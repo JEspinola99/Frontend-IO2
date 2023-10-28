@@ -55,7 +55,7 @@ export const ContainerColumn = ({
     }, 1000)
 
     const [showTask, setShowTask] = useState(false)
-    const handleOpenTask = () => setShowTask(() => true)
+    const handleOpenTask = () =>  setShowTask(() => true)
     const handleCloseTask = () => setShowTask(() => false)
 
     useEffect(() => {

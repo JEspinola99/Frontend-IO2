@@ -33,32 +33,24 @@ export const CreateTaskModal = ({
     })
 
     const store = useContext(SpaceContext)
-    const { boardActive, setBoardActive, miembros  } = useStore(store, (s) => s)
+    const { boardActive, setBoardActive, miembros, etiquetas } = useStore(store, (s) => s)
 
-    const createTask:SubmitHandler<ITask>  = async (fetchData) => {
-        const {data} =  await create(fetchData)
+    const createTask: SubmitHandler<ITask> = async (fetchData) => {
+        const { data } = await create({ ...fetchData, usuarioId: Number(fetchData.usuarioId), etiquetaId: Number(fetchData.etiquetaId) })
         const newTask = data
         const newTasks = boardActive.columnas.find((col) => col.id == columnId)?.tareas.concat(newTask)
         const newColumns = boardActive.columnas.map((col) => {
-             if(col.id == columnId){
-                 return {...col, tareas: newTasks as ITask[]}
-             }else{
-                 return {...col}
-             }
+            if (col.id == columnId) {
+                return { ...col, tareas: newTasks as ITask[] }
+            } else {
+                return { ...col }
+            }
         })
-        const updatedBoard = {...boardActive, columnas: newColumns }
+        const updatedBoard = { ...boardActive, columnas: newColumns }
         setBoardActive(updatedBoard)
         handleClose()
+        methods.reset()
     }
-
-
-    const handleChange = (e: any) => {
-        const target = e.target
-        const value = target.value == 0 ? null : target.value
-        methods.setValue('usuarioId', value)
-    }
-
-
 
 
     return (
@@ -100,10 +92,23 @@ export const CreateTaskModal = ({
                                 <Col>Usuario Asignado</Col>
                                 <Col>
                                     <FormSelect {...methods.register('usuarioId', { required: true })}>
-                                        <option value={0}>NO DEFINIDO</option>
                                         {
                                             miembros?.map((item) => (
                                                 <option value={item.id} key={item.id} >{item.email}</option>
+                                            ))
+                                        }
+                                    </FormSelect>
+                                </Col>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Col>Etiqueta</Col>
+                                <Col>
+                                    <FormSelect {...methods.register('etiquetaId', { required: true })}>
+                                        {
+                                            etiquetas?.map((etiqueta) => (
+                                                <option value={etiqueta.id} key={etiqueta.id}>{etiqueta.nombre}</option>
                                             ))
                                         }
                                     </FormSelect>

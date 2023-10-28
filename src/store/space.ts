@@ -24,6 +24,13 @@ export interface IMiembro {
     email: string
 }
 
+export interface IEtiqueta {
+    id: number
+    nombre: string
+    color: string
+}
+
+
 export interface IColumn {
     id: number
     nombre: string
@@ -49,6 +56,7 @@ export interface ISpace {
     boardActive: IBoard;
     id: string
     loadingKanban: boolean
+    etiquetas: IEtiqueta[]
     setUsers: (miembros:[]) => void;
     setSpaceData: (spaceData: ISpaceData) => void;
     setName: (nombre: string) => void;
@@ -65,6 +73,7 @@ export interface ISpaceValues {
     boardActive: IBoard
     id: string
     loadingKanban: boolean
+    etiquetas: IEtiqueta[]
 }
 
 export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
@@ -75,7 +84,8 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         opciones: [],
         boardActive: {id: 0, nombre: '', columnas: []},
         id: '',
-        loadingKanban: false
+        loadingKanban: false,
+        etiquetas: []
     }
 
     return createStore<ISpace>()((set) => ({

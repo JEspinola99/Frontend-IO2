@@ -7,11 +7,11 @@ import { RiDraggable } from 'react-icons/ri'
 
 
 type ITemsType = {
-    id: UniqueIdentifier
+    id: UniqueIdentifier | string
     title: string
     index: number
     parent: UniqueIdentifier
-    handleOpenTask: () => void
+    handleOpenTask: (id:string) => void
 }
 
 export const Items = ({ id, title, index, parent, handleOpenTask }: ITemsType) => {
@@ -38,7 +38,7 @@ export const Items = ({ id, title, index, parent, handleOpenTask }: ITemsType) =
             )}
         >
             <div className="d-flex border items-center">
-                <span className="border flex-grow-1 user-select-none" onClick={handleOpenTask} >
+                <span className="border flex-grow-1 user-select-none" onClick={() =>handleOpenTask(id as string)} >
                     {title}
                 </span>
                 <span {...listeners} className="icon-grab">

@@ -4,6 +4,7 @@ import Encabezado from "../../head/page";
 import { getAllUsers } from "@/services/userService";
 import { MainWrapper } from '@/app/components/espacio/board/MainWrapper';
 import { ISpaceValues } from '@/store/space';
+import { getAll } from '@/services/etiquetaService';
 
 export default async function Page({ params }: any) {
   const id = params.id
@@ -29,6 +30,7 @@ export default async function Page({ params }: any) {
   const nombre = data?.nombre;
   const boards = data?.tablero
   const opciones = users
+  const {data:etiquetas} = await getAll()
 
   const spaceData: ISpaceValues = {
     nombre,
@@ -37,7 +39,8 @@ export default async function Page({ params }: any) {
     opciones,
     boardActive: firstBoardData,
     id,
-    loadingKanban: false
+    loadingKanban: false,
+    etiquetas
   }
 
   return (

@@ -11,7 +11,7 @@ import FidgetSpinner from "react-loader-spinner";
 import { Loader } from "../Loader";
 import { IBoard, IColumn, ITask } from "@/store/space";
 import { IUpdateColumns, updateColums } from "@/services/columnService";
-import { create, deleteTask } from "@/services/taskService";
+import { create, deleteTask, getTask } from "@/services/taskService";
 import { UpdateTaskModal } from "./UpdateTaskModal";
 
 type DNDType = {
@@ -30,7 +30,19 @@ export const Kanban = () => {
     const [showAddItemModal, setShowAddItemModal] = useState(false)
     const [showTask, setShowTask] = useState(false)
     const handleCloseTask = () => setShowTask(() => false)
-    const handleOpenTask = () => setShowTask(() => true)
+    const [taskData, setTaskData] = useState<ITask>({} as ITask);
+    const handleOpenTask = async(id:string) => {
+        const {data} = await getTask(id)
+        const task:ITask = {
+            titulo: data.titulo,
+            descripcion: data.descripcion,
+            fechaVencimiento: data.fechaVencimiento.split('T')[0],
+            usuarioId: data.usuarioId,
+            etiquetaId: data.etiquetaId
+        }
+        setShowTask(() => true)
+        setTaskData(task)
+    } 
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -76,7 +88,9 @@ export const Kanban = () => {
                     <>
                         <UpdateTaskModal
                             show={showTask}
-                            handleClose={handleCloseTask} />
+                            handleClose={handleCloseTask}
+                            taskData={taskData}
+                             />
                         <DndContext
                             sensors={sensors}
                             collisionDetection={closestCorners}
