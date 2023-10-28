@@ -227,10 +227,15 @@ body {
 }
 
 .itemDraggable {
-  cursor: grab;
-  display: flex;
-  border: 1px red solid;
+  /* cursor: grab; */
+  /* display: flex; */
+  /* border: 1px red solid; */
 }
+
+.icon-grab{
+  cursor: grab;
+}
+
 
 .itemBoard {
   border: 5px blue solid;
