@@ -44,6 +44,7 @@ export interface ISpaceData {
     boards: []
     opciones: []
     boardActive: IBoard
+    userActive: IMiembro
     loadingKanban: boolean
 }
 
@@ -54,6 +55,7 @@ export interface ISpace {
     opciones: string[]
     setNewBoard: (tablero:IBoard[]) => void;
     boardActive: IBoard;
+    userActive: IMiembro
     id: string
     loadingKanban: boolean
     etiquetas: IEtiqueta[]
@@ -63,6 +65,7 @@ export interface ISpace {
     setBoardActive: (board: IBoard) => void;
     setNewColumn: (columnas: IColumn[]) => void;
     setLoadingKanban: (isLoading: boolean)=> void;
+    setUserActive: (usuario: IMiembro) => void;
 }
 
 export interface ISpaceValues {
@@ -74,6 +77,7 @@ export interface ISpaceValues {
     id: string
     loadingKanban: boolean
     etiquetas: IEtiqueta[]
+    userActive: IMiembro
 }
 
 export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
@@ -85,7 +89,8 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         boardActive: {id: 0, nombre: '', columnas: []},
         id: '',
         loadingKanban: false,
-        etiquetas: []
+        etiquetas: [],
+        userActive: {id: 0, email: ''}
     }
 
     return createStore<ISpace>()((set) => ({
@@ -97,6 +102,7 @@ export const useSpaceStore = (iniProps?: Partial<ISpace>) => {
         setName: (nombre) => set((state) => ({...state, nombre})),
         setBoardActive: (boardActive) => set((state) => ({...state, boardActive})),
         setNewColumn: (columnas) => set((state) => ({boardActive: {...state.boardActive, columnas}})),
-        setLoadingKanban: (loadingKanban) => set((state) => ({...state, loadingKanban}))
+        setLoadingKanban: (loadingKanban) => set((state) => ({...state, loadingKanban})),
+        setUserActive:(usuario) => set((state) => ({...state, userActive: usuario}))
     }))
 }

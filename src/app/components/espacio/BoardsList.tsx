@@ -11,13 +11,13 @@ export const BoardList = () => {
   const [active, setActive] = useState(0);
 
   const store = useContext(SpaceContext)
-  const { boards, setBoardActive  } = useStore(store, (s) => s)
+  const { boards, setBoardActive, userActive } = useStore(store, (s) => s)
 
   const handleActive = async(i: number) => {
     setActive(() => i);
     const boardActive = boards.find((tablero, index) => index == i) as IBoard;
-    await getBoard(boardActive.id)
-    setBoardActive({ nombre: boardActive.nombre, id: boardActive.id, columnas: boardActive.columnas });
+    const {data} = await getBoard(boardActive.id, userActive.id)
+    setBoardActive({ nombre: data.nombre, id: data.id, columnas: data.columnas });
   };
 
   return (
