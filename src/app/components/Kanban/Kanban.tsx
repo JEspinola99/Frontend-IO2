@@ -14,6 +14,7 @@ import { IUpdateColumns, updateColums } from "@/services/columnService";
 import { create, deleteTask, getTask } from "@/services/taskService";
 import { UpdateTaskModal } from "./UpdateTaskModal";
 import toast, { Toaster } from "react-hot-toast";
+import { getBoard } from "@/services/spaceService";
 
 type DNDType = {
     id: UniqueIdentifier;
@@ -56,28 +57,31 @@ export const Kanban = () => {
         const columnId1 = active?.data?.current?.parent
         const columnId2 = over?.id as number
         const activeCol = boardActive.columnas.find((col) => col.id == active?.data?.current?.parent)
-        const activeColIndex = boardActive.columnas.findIndex((col) => col.id == active?.data?.current?.parent)
-        const overColIndex = boardActive.columnas.findIndex((col) => col.id == over?.id)
+        // const activeColIndex = boardActive.columnas.findIndex((col) => col.id == active?.data?.current?.parent)
+        // const overColIndex = boardActive.columnas.findIndex((col) => col.id == over?.id)
 
-        const updatedItems = activeCol?.tareas.filter((item) => item.id != active?.data?.current?.id) as ITask[]
+        // const updatedItems = activeCol?.tareas.filter((item) => item.id != active?.data?.current?.id) as ITask[]
         const removedItem = activeCol?.tareas.filter((item) => item.id == active?.data?.current?.id) as ITask[]
         try{
-            const { data } = await create({ ...removedItem[0], columnaId: columnId2 })
-            const newContainers: IColumn[] = boardActive.columnas.map((col, index) => {
-                if (index == activeColIndex) {
-                    const column: IColumn = { ...col, tareas: updatedItems }
-                    return column;
-                } else if (index == overColIndex) {
-                    const overItems = col.tareas
-                    return { ...col, tareas: overItems?.concat(data) }
-                } else {
-                    return { ...col };
-                }
-            })
+            await create({ ...removedItem[0], columnaId: columnId2 })
+            // const newContainers: IColumn[] = boardActive.columnas.map((col, index) => {
+            //     if (index == activeColIndex) {
+            //         const column: IColumn = { ...col, tareas: updatedItems, numeroDeTareas: updatedItems.length }
+            //         return column;
+            //     } else if (index == overColIndex) {
+            //         const overItems = col.tareas
+            //         return { ...col, tareas: overItems?.concat(data), numeroDeTareas: updatedItems.length }
+            //     } else {
+            //         return { ...col, numeroDeTareas: col.tareas.length };
+            //     }
+            // })
     
             await deleteTask({ id: removedItem[0].id, columnaId: columnId1 })
-            const updatedBoardActive: IBoard = { ...boardActive, columnas: newContainers }
-            setBoardActive(updatedBoardActive)
+            // const updatedBoardActive: IBoard = { ...boardActive, columnas: newContainers }
+            const res = await getBoard(boardActive.id, null )
+            // console.log(res.data)
+            // setBoardActive(updatedBoardActive)
+            setBoardActive(res.data)
         }catch(error: any){
             const message = error?.response?.data?.message;
             toast.error(message)
@@ -115,7 +119,7 @@ export const Kanban = () => {
                                                     setShowAddItemModal(true)
                                                     setCurrentContainerId(container.id)
                                                 }}
-                                                tasks={container?.tareas.length}
+                                                tasks={container?.numeroDeTareas}
                                                 maxTareas={container?.maxTareas}
                                             >
                                                 <div className="flex items-start flex-col gap-1 border">

@@ -40,7 +40,7 @@ export default async function Page({ params }: any) {
     boardActive: firstBoardData,
     id,
     loadingKanban: false,
-    etiquetas
+    etiquetas,
   }
 
   return (
