@@ -7,14 +7,16 @@ export default function MainPage({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Encabezado />
-      <div className="h-full flex flex-col items-center justify-between">
-        <div className="relative w-full">
+      <div className="">
+        <div className="relative w-full h-screen">
           {/* <div className="absolute -z-10 w-full">
             <Image src={bgImage} alt="bgImage" className="w-full" />
           </div> */}
-          <div className="h-screen flex flex-row justify-start p-0 py-2 left-40 ">
+          <div className="h-screen flex flex-row align-top justify-start p-0 bg-transparent">
             <SideBar />
-            {children}
+            <div className="h-screen w-full flex align-top justify-start p-0 text-bold text-white">
+              {children}
+            </div>
           </div>
         </div>
       </div>

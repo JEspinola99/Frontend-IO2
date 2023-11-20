@@ -10,7 +10,7 @@ function Columna({ items }: Props) {
       {items.map((item) => (
         <div
           key={item}
-          className="bg-sky- p-3 w-80  hover:bg-sky-400 rounded-md"
+          className="bg-sky-400 p-3 w-80  hover:bg-sky-400 rounded-md"
         >
           <h4 className="flex justify-between items-center">
             <span className="text-2xl text-sky-950">{item}</span>

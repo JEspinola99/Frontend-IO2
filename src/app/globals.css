@@ -6,7 +6,11 @@
 body {
   /* position: static;
   min-height: 100vh; */
-  /* background-color: #e1e8ee;
+  background-image: url("./landscape8.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  text: bold;
+
   /* display: flex;
   align-items: center;
   justify-content: center; */
@@ -18,8 +22,8 @@ body {
 .form-structor {
   background-color: #222;
   border-radius: 15px;
-  height: 550px;
-  width: 350px;
+  height: 750px;
+  width: 450px;
   position: relative;
   overflow: hidden;
 
@@ -195,8 +199,7 @@ body {
   left: 25px;
 }
 
-
-.boardItem:hover{
+.boardItem:hover {
   background-color: blue;
 }
 
@@ -232,14 +235,13 @@ body {
   /* border: 1px red solid; */
 }
 
-.icon-grab{
+.icon-grab {
   cursor: grab;
 }
 
-.icon-grab.active{
+.icon-grab.active {
   cursor: grabbing;
 }
-
 
 .itemBoard {
   border: 5px blue solid;
@@ -248,12 +250,13 @@ body {
 }
 
 .containerBoard {
+  background: #123755;
   border: 2px black solid;
   max-height: 90vh;
   cursor: default !important;
 }
 .userActive {
-  background-color:  gray !important;
+  background-color: red !important;
 }
 
 .maxTasks {
