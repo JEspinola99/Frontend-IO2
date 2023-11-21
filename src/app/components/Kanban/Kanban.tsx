@@ -29,6 +29,7 @@ import { IUpdateColumns, updateColums } from "@/services/columnService";
 import { create, deleteTask, getTask } from "@/services/taskService";
 import { UpdateTaskModal } from "./UpdateTaskModal";
 import toast, { Toaster } from "react-hot-toast";
+import { getBoard } from "@/services/spaceService";
 
 type DNDType = {
   id: UniqueIdentifier;

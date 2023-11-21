@@ -40,4 +40,5 @@ export const BoardList = () => {
       ))}
     </div>
   );
+  
 };
