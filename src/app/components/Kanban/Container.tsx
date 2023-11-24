@@ -11,6 +11,7 @@ import { useStore } from "zustand";
 import { CreateTaskModal } from "./CreateTaskModal";
 import { useDroppable } from "@dnd-kit/core";
 import { debounce } from "lodash";
+import toast from "react-hot-toast";
 
 export const ContainerColumn = ({
   id,
@@ -44,9 +45,13 @@ export const ContainerColumn = ({
   const handleClose = () => setShow(() => false);
 
   const handleDeleteColumn = async () => {
-    const res = await deleteColumn(id);
-    const newColums = boardActive.columnas.filter((col) => col.id != id);
-    setNewColumn(newColums);
+    try {
+      const res = await deleteColumn(id);
+      const newColums = boardActive.columnas.filter((col) => col.id != id);
+      setNewColumn(newColums);
+    } catch (error) {
+      toast.error('No se puede eliminar una columna con tareas')  
+    }
     handleClose();
   };
 
@@ -128,9 +133,12 @@ export const ContainerColumn = ({
           </div>
         </div>
         {children}
+        {
+          titleValue != "HECHO" &&
         <Button variant="secondary" size="sm" onClick={handleOpenTask}>
           Agregar Tarea
         </Button>
+        }
       </div>
     </>
   );

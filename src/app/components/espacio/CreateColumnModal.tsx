@@ -61,13 +61,19 @@ export const CreateColumnModal = ({
                 </Modal.Header>
                 <Modal.Body>
                     <Row>
+                        <Row>
+                            <Col>Nombre de la Columna</Col>
                         <Col>
                             <FormControl {...methods.register("nombre", { required: "Nombre es obligatorio" })} />
                         </Col>
+                        </Row>
+                        <Row className="mt-2">
+                        <Col>Cantidad de tareas maxima</Col>
                         <Col>
                             <FormControl type="number" {...methods.register("maxTareas",
                                 { required: "Cantidad de Tareas maxima" })} />
                         </Col>
+                        </Row>
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>

@@ -1,5 +1,6 @@
 import { SpaceContext } from "@/context/SpaceContext"
 import { deleteColumn } from "@/services/columnService"
+import { getBoard } from "@/services/spaceService"
 import { create } from "@/services/taskService"
 import { ITask } from "@/store/space"
 import { useContext } from "react"
@@ -48,8 +49,10 @@ export const CreateTaskModal = ({
                     return { ...col }
                 }
             })
-            const updatedBoard = { ...boardActive, columnas: newColumns }
-            setBoardActive(updatedBoard)
+            // const updatedBoard = { ...boardActive, columnas: newColumns }
+            // setBoardActive(updatedBoard)
+            const res = await getBoard(boardActive.id, null)
+            setBoardActive(res?.data);
         } catch (error: any) {
             const message = error?.response?.data?.message;
             toast.error(message)

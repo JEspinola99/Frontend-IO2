@@ -91,30 +91,31 @@ export const Kanban = () => {
       (item) => item.id == active?.data?.current?.id
     ) as ITask[];
     try {
-      const { data } = await create({
+      await create({
         ...removedItem[0],
         columnaId: columnId2,
       });
-      const newContainers: IColumn[] = boardActive.columnas.map(
-        (col, index) => {
-          if (index == activeColIndex) {
-            const column: IColumn = { ...col, tareas: updatedItems };
-            return column;
-          } else if (index == overColIndex) {
-            const overItems = col.tareas;
-            return { ...col, tareas: overItems?.concat(data) };
-          } else {
-            return { ...col };
-          }
-        }
-      );
+      // const newContainers: IColumn[] = boardActive.columnas.map(
+      //   (col, index) => {
+      //     if (index == activeColIndex) {
+      //       const column: IColumn = { ...col, tareas: updatedItems };
+      //       return column;
+      //     } else if (index == overColIndex) {
+      //       const overItems = col.tareas;
+      //       return { ...col, tareas: overItems?.concat(data) };
+      //     } else {
+      //       return { ...col };
+      //     }
+      //   }
+      // );
 
       await deleteTask({ id: removedItem[0].id, columnaId: columnId1 });
-      const updatedBoardActive: IBoard = {
-        ...boardActive,
-        columnas: newContainers,
-      };
-      setBoardActive(updatedBoardActive);
+      // const updatedBoardActive: IBoard = {
+      //   ...boardActive,
+      //   columnas: newContainers,
+      // };
+      const res = await getBoard(boardActive.id, null)
+      setBoardActive(res?.data);
     } catch (error: any) {
       const message = error?.response?.data?.message;
       toast.error(message);
@@ -149,7 +150,7 @@ export const Kanban = () => {
                       setShowAddItemModal(true);
                       setCurrentContainerId(container.id);
                     }}
-                    tasks={container?.tareas.length}
+                    tasks={container?.numeroDeTareas}
                     maxTareas={container?.maxTareas}
                   >
                     <div className="flex items-start flex-col gap-2 ">
